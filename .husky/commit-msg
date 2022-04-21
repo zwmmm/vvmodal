@@ -1,0 +1,3 @@
+#!/bin/sh
+echo "commit msg 格式校验中..."
+npx --no-install commitlint --edit "$1"

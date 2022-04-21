@@ -1,0 +1,3 @@
+#!/bin/sh
+echo "代码格式检查中..."
+npx --no-install lint-staged
