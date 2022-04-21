@@ -1,1 +1,1 @@
-export * from './yone'
+export * from './ukyou'
