@@ -1,7 +1,8 @@
 {
   "name": "ukyou",
   "version": "0.0.1",
-  "main": "dist/index.js",
+  "type": "module",
+  "main": "dist/index.mjs",
   "typings": "dist/index.d.ts",
   "scripts": {
     "build": "pnpm tsup",
