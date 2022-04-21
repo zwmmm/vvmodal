@@ -1,1 +1,1 @@
-export * from './jinx'
+export * from './yone'
