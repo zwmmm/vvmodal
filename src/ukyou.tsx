@@ -1,5 +1,5 @@
 import { ModalState, Provider, useModal } from './store'
-import {
+import React, {
   cloneElement,
   ComponentProps,
   ComponentType,
