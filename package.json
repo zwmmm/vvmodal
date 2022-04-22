@@ -1,6 +1,6 @@
 {
   "name": "ukyou",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "main": "dist/esm/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
