@@ -9,7 +9,7 @@
     "prepack": "pnpm build"
   },
   "author": "wayne",
-  "license": "Apache",
+  "license": "MIT",
   "devDependencies": {
     "@commitlint/cli": "^16.0.2",
     "@commitlint/config-angular": "^16.0.0",
