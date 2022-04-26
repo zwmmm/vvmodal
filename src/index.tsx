@@ -1,7 +1,8 @@
 import React from 'react'
 import {
   CreateModalOptions,
-  CreateModalType, DidShowCallbackType,
+  CreateModalType,
+  DidShowCallbackType,
   PlainObject,
   UkyouPromiseType
 } from './types'
@@ -11,7 +12,7 @@ import {
   useModalData,
   useModalShow
 } from './modal'
-import {register, activationModal, UkyouProvider, useGlobalModal} from './global'
+import { activationModal, register, UkyouProvider } from './global'
 
 export { useModal, useModalShow, UkyouProvider }
 
@@ -19,21 +20,26 @@ const defaultFunction = () => {
   console.error('请等Modal执行结束之后在调用')
 }
 
-let uidSeed = 0
+const promiseMap = new Map<string, UkyouPromiseType>()
 
-function createPromise<T = any>(): UkyouPromiseType<T> {
+function createPromise(id: string): void {
   let resolve: UkyouPromiseType['resolve'] = () => {}
   let reject: UkyouPromiseType['reject'] = () => {}
-  const value = new Promise<T>((_resolve, _reject) => {
+  let value = new Promise((_resolve, _reject) => {
     reject = _reject
     resolve = _resolve
   })
-  return {
+  value.finally(() => {
+    createPromise(id)
+  })
+  promiseMap.set(id, {
     value,
     reject,
     resolve
-  }
+  })
 }
+
+let uidSeed = 0
 
 export function createModal<T = any>(
   Comp: React.ComponentType<T>,
@@ -49,10 +55,11 @@ export function createModal<T = any>(
     didShowCallback: []
   }
   const ukyouId = `__ukyou__${uidSeed++}`
-  const promise = createPromise()
+  createPromise(ukyouId)
   const Modal = (props: T) => {
     const modal = useModalData()
     Object.assign(_modal, modal)
+    const promise = promiseMap.get(ukyouId) as UkyouPromiseType
     return (
       <UkyouModalProvider
         value={{
@@ -69,7 +76,7 @@ export function createModal<T = any>(
     ukyouId,
     Modal,
     modal: _modal,
-    show(payload?: PlainObject) {
+    show: (payload?: PlainObject) => {
       if (options?.global) {
         activationModal(ukyouId)
       }
@@ -77,7 +84,7 @@ export function createModal<T = any>(
         _modal.show(payload)
         _modal.didShowCallback.forEach((cb: DidShowCallbackType) => cb())
       }, 0)
-      return promise.value
+      return (promiseMap.get(ukyouId) as UkyouPromiseType).value
     },
     updateArgs(payload?: PlainObject) {
       _modal.updateArgs(payload)

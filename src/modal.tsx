@@ -1,11 +1,17 @@
 import React, {
   createContext,
   useCallback,
-  useContext, useEffect,
+  useContext,
+  useEffect,
   useRef,
   useState
 } from 'react'
-import {DidShowCallbackType, ModalComponentProps, PlainObject, UseModalProps} from './types'
+import {
+  DidShowCallbackType,
+  ModalComponentProps,
+  PlainObject,
+  UseModalProps
+} from './types'
 
 const defaultModalContext = Symbol('defaultModalContext')
 
