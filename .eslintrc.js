@@ -1,6 +1,6 @@
 module.exports = {
-  extends: [
-    'alloy',
-    'alloy/typescript',
-  ]
+  extends: ['alloy', 'alloy/typescript'],
+  globals: {
+    __DEV__: true
+  }
 }

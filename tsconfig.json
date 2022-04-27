@@ -9,5 +9,5 @@
     "strictNullChecks": true,
     "resolveJsonModule": true,
     "jsx": "react-jsx"
-  }
+  },
 }

@@ -54,7 +54,6 @@ export const UkyouPlaceholder = memo(() => {
     })
     return item
   }, [globalModal.value])
-  console.log(toRender, 'toRender')
   return (
     <>
       {toRender.map((item) => (
