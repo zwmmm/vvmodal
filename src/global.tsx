@@ -1,5 +1,5 @@
-import React, { useCallback, useMemo, useState } from 'react'
-import { GlobalModalItem, GlobalModalType } from './types'
+import React, { memo, useCallback, useMemo, useState } from 'react'
+import { GlobalModalItem, GlobalModalType, PlainObject } from './types'
 
 const MODAL_REGISTRY = new Map()
 
@@ -24,11 +24,13 @@ const UkyouContext = React.createContext<
   GlobalModalType | typeof defaultUkyouContext
 >(defaultUkyouContext)
 
-export let activationModal: GlobalModalType['register']
+export let mountModal: GlobalModalType['register'] = (key: string) => {}
+export let destroyModal: GlobalModalType['unregister'] = (key: string) => {}
 
 export function UkyouProvider(props: React.ComponentProps<any>) {
   const value = useGlobalModalData()
-  activationModal = value.register
+  mountModal = value.register
+  destroyModal = value.unregister
   return (
     <UkyouContext.Provider value={value}>
       {props.children}
@@ -37,29 +39,30 @@ export function UkyouProvider(props: React.ComponentProps<any>) {
   )
 }
 
-export function UkyouPlaceholder() {
+export const UkyouPlaceholder = memo(() => {
   const globalModal = useGlobalModal()
   const toRender: GlobalModalItem[] = useMemo(() => {
-    const value: GlobalModalItem[] = []
-    Object.entries(globalModal.value).forEach(([key, show]) => {
-      if (show && hasRegister(key)) {
-        value.push({
+    const item: GlobalModalItem[] = []
+    Object.entries(globalModal.value).forEach(([key, value]) => {
+      if (value.visible && hasRegister(key)) {
+        item.push({
           key,
-          Comp: getRegister(key)
+          Comp: getRegister(key),
+          args: value.args
         })
       }
     })
-    return value
+    return item
   }, [globalModal.value])
   console.log(toRender, 'toRender')
   return (
     <>
       {toRender.map((item) => (
-        <item.Comp key={item.key} />
+        <item.Comp key={item.key} {...item.args} />
       ))}
     </>
   )
-}
+})
 
 export function useGlobalModal() {
   const context = React.useContext(UkyouContext)
@@ -71,11 +74,23 @@ export function useGlobalModal() {
 
 export function useGlobalModalData(): GlobalModalType {
   const [value, setValue] = useState({})
-  const register = useCallback((key: string) => {
-    setValue((val) => ({ ...val, [key]: true }))
+  const register = useCallback((key: string, args?: PlainObject) => {
+    setValue((val) => ({
+      ...val,
+      [key]: {
+        visible: true,
+        args: args || {}
+      }
+    }))
   }, [])
   const unregister = useCallback((key: string) => {
-    setValue((val) => ({ ...val, [key]: false }))
+    setValue((val) => ({
+      ...val,
+      [key]: {
+        visible: false,
+        args: {}
+      }
+    }))
   }, [])
   return {
     value,

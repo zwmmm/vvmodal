@@ -19,9 +19,9 @@ const ModalContext = createContext<UseModalProps | typeof defaultModalContext>(
   defaultModalContext
 )
 
-export const useModalData = (): ModalComponentProps => {
+export const useModalData = (props?: PlainObject): ModalComponentProps => {
   const [visible, setVisible] = useState(false)
-  const args = useRef({})
+  const args = useRef(props || {})
   const didShowCallback = useRef<DidShowCallbackType[]>([])
   const show = useCallback((props?: PlainObject) => {
     args.current = props || {}

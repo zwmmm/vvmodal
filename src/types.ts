@@ -16,11 +16,12 @@ export interface ModalComponentProps extends PlainObject {
 export interface UseModalProps extends ModalComponentProps {
   resolve: <T = any>(value?: T | PromiseLike<T>) => void,
   reject: UkyouPromiseType['reject']
+  destroy: () => void
 }
 
-export interface CreateModalType<T = any> {
+export interface CreateModalType<T> {
   ukyouId: string
-  Modal: React.ComponentType<T>,
+  Modal: React.ComponentType<T>
   modal: Omit<ModalComponentProps, 'didShowCallback' | 'pushDidShowCallback'>
   show: (payload?: PlainObject) => Promise<any>,
   updateArgs: (payload?: PlainObject) => void,
@@ -35,14 +36,18 @@ export interface UkyouPromiseType<T = any> {
 export type DidShowCallbackType = ()  => void
 
 export interface GlobalModalType {
-  value: PlainObject<boolean>,
-  register: (key: string) => void,
+  value: PlainObject<{
+    visible: boolean,
+    args: PlainObject
+  }>,
+  register: (key: string, payload?: PlainObject) => void,
   unregister: (key: string) => void,
 }
 
 export interface GlobalModalItem {
   key: string
-  Comp: React.ComponentType
+  Comp: React.ComponentType,
+  args: PlainObject
 }
 
 export interface CreateModalOptions {

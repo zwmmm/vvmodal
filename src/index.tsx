@@ -1,10 +1,10 @@
 import React from 'react'
 import {
-  CreateModalOptions,
   CreateModalType,
   DidShowCallbackType,
   PlainObject,
-  UkyouPromiseType
+  UkyouPromiseType,
+  UseModalProps
 } from './types'
 import {
   UkyouModalProvider,
@@ -12,7 +12,7 @@ import {
   useModalData,
   useModalShow
 } from './modal'
-import { activationModal, register, UkyouProvider } from './global'
+import { destroyModal, mountModal, register, UkyouProvider } from './global'
 
 export { useModal, useModalShow, UkyouProvider }
 
@@ -20,30 +20,26 @@ const defaultFunction = () => {
   console.error('请等Modal执行结束之后在调用')
 }
 
-const promiseMap = new Map<string, UkyouPromiseType>()
+const showCallbackMap = new Map<string, UkyouPromiseType>()
 
-function createPromise(id: string): void {
+function createPromise(): UkyouPromiseType {
   let resolve: UkyouPromiseType['resolve'] = () => {}
   let reject: UkyouPromiseType['reject'] = () => {}
   let value = new Promise((_resolve, _reject) => {
     reject = _reject
     resolve = _resolve
   })
-  value.finally(() => {
-    createPromise(id)
-  })
-  promiseMap.set(id, {
+  return {
     value,
     reject,
     resolve
-  })
+  }
 }
 
 let uidSeed = 0
 
 export function createModal<T = any>(
-  Comp: React.ComponentType<T>,
-  options?: CreateModalOptions
+  Comp: React.ComponentType
 ): CreateModalType<T> {
   const _modal = {
     visible: false,
@@ -55,20 +51,20 @@ export function createModal<T = any>(
     didShowCallback: []
   }
   const ukyouId = `__ukyou__${uidSeed++}`
-  createPromise(ukyouId)
-  const Modal = (props: T) => {
-    const modal = useModalData()
+  const Modal: React.FC<T> = (props) => {
+    const modal = useModalData(props)
     Object.assign(_modal, modal)
-    const promise = promiseMap.get(ukyouId) as UkyouPromiseType
+    const promise = showCallbackMap.get(ukyouId) || createPromise()
     return (
       <UkyouModalProvider
         value={{
           ...modal,
-          reject: promise.reject,
-          resolve: promise.resolve
+          destroy: () => destroyModal(ukyouId),
+          reject: promise?.reject,
+          resolve: promise?.resolve
         }}
       >
-        <Comp {...props} />
+        <Comp />
       </UkyouModalProvider>
     )
   }
@@ -77,14 +73,18 @@ export function createModal<T = any>(
     Modal,
     modal: _modal,
     show: (payload?: PlainObject) => {
-      if (options?.global) {
-        activationModal(ukyouId)
-      }
+      mountModal(ukyouId, payload)
+      const showCallback = createPromise()
+      // promise 结束之后删除 释放内存
+      showCallback.value.finally(() => {
+        showCallbackMap.delete(ukyouId)
+      })
+      showCallbackMap.set(ukyouId, showCallback)
       setTimeout(() => {
         _modal.show(payload)
         _modal.didShowCallback.forEach((cb: DidShowCallbackType) => cb())
       }, 0)
-      return (promiseMap.get(ukyouId) as UkyouPromiseType).value
+      return showCallback.value
     },
     updateArgs(payload?: PlainObject) {
       _modal.updateArgs(payload)
@@ -93,9 +93,39 @@ export function createModal<T = any>(
 }
 
 export function createGlobalModal<T = any>(
-  Comp: React.ComponentType<T>
+  Comp: React.ComponentType
 ): CreateModalType<T> {
-  const res = createModal(Comp, { global: true })
+  const res = createModal(Comp)
   register(res.ukyouId, res.Modal)
   return res
+}
+
+export const antdModal = (
+  modal: UseModalProps
+): {
+  visible: UseModalProps['visible']
+  onCancel: UseModalProps['hide']
+  afterClose: UseModalProps['destroy']
+} => {
+  return {
+    visible: modal.visible,
+    onCancel: modal.hide,
+    afterClose: modal.destroy
+  }
+}
+
+export const antdDrawer = (
+  modal: UseModalProps
+): {
+  visible: UseModalProps['visible']
+  onClose: UseModalProps['hide']
+  afterVisibleChange: (visible: boolean) => void
+} => {
+  return {
+    visible: modal.visible,
+    onClose: modal.hide,
+    afterVisibleChange: (visible: boolean) => {
+      visible || modal.destroy()
+    }
+  }
 }
