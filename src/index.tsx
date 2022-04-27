@@ -38,7 +38,7 @@ function createPromise(): UkyouPromiseType {
 
 let uidSeed = 0
 
-export function createModal<T = any>(
+export function createModal<T = PlainObject>(
   Comp: React.ComponentType
 ): CreateModalType<T> {
   const _modal = {
@@ -72,7 +72,7 @@ export function createModal<T = any>(
     ukyouId,
     Modal,
     modal: _modal,
-    show: (payload?: PlainObject) => {
+    show: (payload?: T) => {
       mountModal(ukyouId, payload)
       const showCallback = createPromise()
       // promise 结束之后删除 释放内存
@@ -95,7 +95,7 @@ export function createModal<T = any>(
 export function createGlobalModal<T = any>(
   Comp: React.ComponentType
 ): CreateModalType<T> {
-  const res = createModal(Comp)
+  const res = createModal<T>(Comp)
   register(res.ukyouId, res.Modal)
   return res
 }

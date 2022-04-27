@@ -23,8 +23,8 @@ export interface CreateModalType<T> {
   ukyouId: string
   Modal: React.ComponentType<T>
   modal: Omit<ModalComponentProps, 'didShowCallback' | 'pushDidShowCallback'>
-  show: (payload?: PlainObject) => Promise<any>,
-  updateArgs: (payload?: PlainObject) => void,
+  show: (payload?: T) => Promise<any>,
+  updateArgs: (payload?: T) => void,
 }
 
 export interface UkyouPromiseType<T = any> {
