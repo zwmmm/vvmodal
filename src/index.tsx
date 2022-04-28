@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import {
   CreateModalType,
   DidShowCallbackType,
@@ -51,10 +51,17 @@ export function createModal<T = PlainObject>(
     didShowCallback: []
   }
   const ukyouId = `__ukyou__${uidSeed++}`
-  const Modal: React.FC<T> = (props) => {
-    const modal = useModalData(props)
+  const Modal: React.FC<T> = () => {
+    const [isRender, setRender] = useState(false)
+    const modal = useModalData()
     Object.assign(_modal, modal)
     const promise = showCallbackMap.get(ukyouId) || createPromise()
+    useEffect(() => {
+      setRender(true)
+    }, [])
+    if (!isRender) {
+      return null
+    }
     return (
       <UkyouModalProvider
         value={{
@@ -73,7 +80,7 @@ export function createModal<T = PlainObject>(
     Modal,
     modal: _modal,
     show: (payload?: T) => {
-      mountModal(ukyouId, payload)
+      mountModal(ukyouId)
       const showCallback = createPromise()
       // promise 结束之后删除 释放内存
       showCallback.value.finally(() => {
