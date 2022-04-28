@@ -1,4 +1,4 @@
-export interface CodeType {
+export interface FileType {
   title: string
   code: string
 }

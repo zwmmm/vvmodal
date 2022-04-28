@@ -1,22 +1,20 @@
-## AntdModal DEMO
-
-> 测试 antd modal
-
-
 import Main from "./Main"
 import Preview from "../Preview"
 import MainRaw from './Main?raw'
 import AntdModalRaw from './AntdModal?raw'
 
-<Main/>
+## AntdModal
 
-<Preview codes={[
-  {
-    title: 'Main.tsx',
-    code: MainRaw
-  },
-  {
-    title: 'AntdModal.tsx',
-    code: AntdModalRaw
-  }
-]}/>
+<Preview
+  files={[
+    {
+      title: 'Main.tsx',
+      code: MainRaw
+    },
+    {
+      title: 'AntdModal.tsx',
+      code: AntdModalRaw
+    }
+  ]}
+  code={<Main/>}
+/>

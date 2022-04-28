@@ -1,5 +1,16 @@
-import AntdModal from './AntdModal/index.mdx'
+import Routes from './routes'
+import Main from './Layout/Main'
+import Sidbar from './Layout/Sidbar'
+import Content from './Layout/Content'
+import React from 'react'
 
 export default function () {
-  return <AntdModal />
+  return (
+    <Main>
+      <Sidbar />
+      <Content>
+        <Routes />
+      </Content>
+    </Main>
+  )
 }

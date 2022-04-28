@@ -1,0 +1,28 @@
+import Note from "../theme/Note";
+
+
+## Feature
+
+1. 创建全局Modal
+2. 创建局部Modal
+
+<Note>
+  Button
+</Note>
+
+```tsx
+import { Button } from 'antd'
+import AntdModal from './AntdModal'
+
+export default function () {
+  const handleClick = () => {
+    AntdModal.show({
+      demo: {
+        a: '1'
+      },
+      title: 'fd'
+    })
+  }
+  return <Button onClick={handleClick}>展示</Button>
+}
+```
