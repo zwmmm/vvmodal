@@ -757,13 +757,6 @@
     "@theme-ui/preset-tailwind" "0.14.4"
     "@theme-ui/preset-tosh" "0.14.4"
 
-"@theme-ui/prism@^0.14.4":
-  version "0.14.4"
-  resolved "https://registry.yarnpkg.com/@theme-ui/prism/-/prism-0.14.4.tgz#848bb5061bb5d128142ee93e2e8f8a7a962e658b"
-  integrity sha512-+roYXBfZ/59Rt1DBxwiyCmH0e8Nuh5gh4w0z5Qf22u0eQfmfHuy90mdDWJHEj8RvtmNFWB+YW5wGcGPOro2Giw==
-  dependencies:
-    prism-react-renderer "^1.1.1"
-
 "@theme-ui/theme-provider@0.14.4":
   version "0.14.4"
   resolved "https://registry.yarnpkg.com/@theme-ui/theme-provider/-/theme-provider-0.14.4.tgz#2635170e23f094d485027be7a056ee35f8d53824"
@@ -2141,7 +2134,7 @@ postcss@^8.4.12:
     picocolors "^1.0.0"
     source-map-js "^1.0.2"
 
-prism-react-renderer@^1.1.1, prism-react-renderer@^1.3.1:
+prism-react-renderer@^1.3.1:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/prism-react-renderer/-/prism-react-renderer-1.3.1.tgz#88fc9d0df6bed06ca2b9097421349f8c2f24e30d"
   integrity sha512-xUeDMEz074d0zc5y6rxiMp/dlC7C+5IDDlaEUlcBOFE2wddz7hz5PNupb087mPwTt7T9BrFmewObfCBuf/LKwQ==

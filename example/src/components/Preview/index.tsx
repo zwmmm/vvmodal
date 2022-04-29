@@ -1,17 +1,36 @@
-import Code from './Code'
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { FileType } from '../../type'
 import Playground from './Playground'
-import { Box, Card, Flex, Grid } from 'theme-ui'
+import { Box, Flex, Grid, useColorMode } from 'theme-ui'
 import clsx from 'clsx'
+import Prism from './Prism'
 
 const Preview: React.FC<{
   files: FileType[]
   code: React.ReactNode
 }> = function (props) {
+  const [mode] = useColorMode()
+  const cardStyle = useMemo(() => {
+    if (mode === 'light') {
+      return {
+        padding: 2,
+        borderRadius: 4,
+        boxShadow: '0 0 8px rgba(0, 0, 0, 0.125)'
+      }
+    }
+    return {
+      padding: 2,
+      borderRadius: 4,
+      border: '1px solid',
+      borderColor: 'muted'
+    }
+  }, [mode])
   const [activeIndex, setIndex] = useState<number>(0)
+  const dot = useMemo(() => {
+    return props.files[activeIndex].title.split('.').pop() || ''
+  }, [activeIndex])
   return (
-    <Card>
+    <Box sx={cardStyle}>
       <Flex
         sx={{
           backgroundColor: 'background',
@@ -42,10 +61,10 @@ const Preview: React.FC<{
         })}
       </Flex>
       <Grid gap={0} columns="50% 50%" sx={{ height: 500, paddingTop: 2 }}>
-        <Code code={props.files[activeIndex]?.code} />
+        <Prism className={dot}>{props.files[activeIndex]?.code}</Prism>
         <Playground>{props.code}</Playground>
       </Grid>
-    </Card>
+    </Box>
   )
 }
 
