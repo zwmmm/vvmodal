@@ -5,7 +5,15 @@ import react from '@vitejs/plugin-react'
 export default defineConfig(async () => {
   const mdx = await import('@mdx-js/rollup')
   return {
-    plugins: [react(), mdx.default({})],
+    plugins: [
+      react({
+        jsxImportSource: 'theme-ui'
+      }),
+      mdx.default({
+        jsxImportSource: 'theme-ui',
+        providerImportSource: '@mdx-js/react'
+      })
+    ],
     optimizeDeps: {
       include: ['react/jsx-runtime']
     },

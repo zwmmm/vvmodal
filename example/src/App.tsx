@@ -1,4 +1,4 @@
-import Routes from './routes'
+import Routes from './routes/routes'
 import Main from './Layout/Main'
 import Sidbar from './Layout/Sidbar'
 import Content from './Layout/Content'

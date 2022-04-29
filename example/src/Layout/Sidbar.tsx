@@ -1,50 +1,52 @@
 import { useLocation, useNavigate } from 'react-router-dom'
-import clsx from 'clsx'
-import { cssd } from '../styles'
-import { routes } from '../routes'
+import { routes } from '../routes/routes'
 import PackageInfo from './PackageInfo'
+import { Box } from 'theme-ui'
+import config from '../config'
+import { MenuItemType } from '../type'
 
-const Sidbar = cssd('div')((props) => ({
-  height: '100vh',
-  overflowY: 'auto',
-  width: props.theme.sidbarWidth,
-  backgroundColor: props.theme.primaryBgc
-}))
-
-const Menu = cssd('div')({
-  padding: '8px 0'
-})
-
-const MenuItem = cssd('div')((props) => ({
-  paddingLeft: '20px',
-  cursor: 'pointer',
-  height: 46,
-  lineHeight: '46px',
-  fontSize: 14,
-  fontWeight: 700,
-  '&.active': {
-    color: props.theme.activeColor,
-    backgroundColor: props.theme.activeBackground
-  }
-}))
-
-export default function () {
+const MenuItem = (props: { item: MenuItemType }) => {
+  const { item } = props
   const navigate = useNavigate()
   const { pathname } = useLocation()
+  const active = item.path === pathname
   return (
-    <Sidbar>
+    <Box
+      p={3}
+      sx={{
+        cursor: 'pointer',
+        fontWeight: 'bold',
+        color: active ? 'primary' : 'inherit',
+        backgroundColor: active ? 'highlight' : 'inherit'
+      }}
+      key={item.name}
+      onClick={() => navigate(item.path)}
+    >
+      {item.name}
+    </Box>
+  )
+}
+
+export default function () {
+  return (
+    <Box
+      sx={{
+        width: config.sidbarWidth,
+        overflowY: 'auto',
+        height: '100vh',
+        backgroundColor: (t) => t.colors?.background
+      }}
+    >
       <PackageInfo />
-      <Menu>
+      <Box
+        sx={{
+          padding: (t) => `${t.space?.[2]}px 0`
+        }}
+      >
         {routes.map((item) => (
-          <MenuItem
-            key={item.name}
-            onClick={() => navigate(item.path)}
-            className={clsx({ active: item.path === pathname })}
-          >
-            {item.name}
-          </MenuItem>
+          <MenuItem item={item} key={item.path} />
         ))}
-      </Menu>
-    </Sidbar>
+      </Box>
+    </Box>
   )
 }

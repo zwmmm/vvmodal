@@ -1,6 +1,6 @@
 import React from 'react'
-import AntdModal from './AntdModal/index'
-import Home from './Home/index'
+import AntdModal from '../pages/AntdModal/index.mdx'
+import Home from '../pages/Home/index.mdx'
 import { useRoutes } from 'react-router-dom'
 
 export const routes = [

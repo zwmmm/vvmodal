@@ -1,22 +1,25 @@
 import React from 'react'
 import Highlight, { defaultProps } from 'prism-react-renderer'
 import theme from 'prism-react-renderer/themes/dracula'
-import { styled } from '@mui/styles'
-import { FileType } from '../type'
+import styled from '../../theme/styled'
+import { FileType } from '../../type'
 
-const Pre = styled('pre')({
+const Pre = styled('pre', {
   textAlign: 'left',
   padding: '0.5em',
   height: '100%',
   boxSizing: 'border-box',
-  flex: 1
+  flex: 1,
+  margin: 0,
+  fontSize: 2,
+  overflow: 'auto'
 })
 
-const Line = styled('span')({
+const Line = styled('span', {
   display: 'table-row'
 })
 
-const LineNo = styled('span')({
+const LineNo = styled('span', {
   display: 'table-cell',
   textAlign: 'right',
   paddingRight: '1em',
@@ -24,7 +27,7 @@ const LineNo = styled('span')({
   opacity: '0.5'
 })
 
-const LineContent = styled('span')({
+const LineContent = styled('span', {
   display: 'table-cell'
 })
 
