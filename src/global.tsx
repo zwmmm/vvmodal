@@ -24,8 +24,10 @@ const UkyouContext = React.createContext<
   GlobalModalType | typeof defaultUkyouContext
 >(defaultUkyouContext)
 
-export let mountModal: GlobalModalType['register'] = (key: string) => {}
-export let destroyModal: GlobalModalType['unregister'] = (key: string) => {}
+export let mountModal: GlobalModalType['register'] = (key: string) =>
+  Promise.resolve()
+export let destroyModal: GlobalModalType['unregister'] = (key: string) =>
+  Promise.resolve()
 
 export function UkyouProvider(props: React.ComponentProps<any>) {
   const value = useGlobalModalData()
@@ -81,6 +83,7 @@ export function useGlobalModalData(): GlobalModalType {
         args: args || {}
       }
     }))
+    return Promise.resolve()
   }, [])
   const unregister = useCallback((key: string) => {
     setValue((val) => ({
@@ -90,6 +93,7 @@ export function useGlobalModalData(): GlobalModalType {
         args: {}
       }
     }))
+    return Promise.resolve()
   }, [])
   return {
     value,

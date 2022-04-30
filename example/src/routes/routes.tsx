@@ -1,13 +1,13 @@
 import React from 'react'
 import AntdModal from '../pages/AntdModal/index.mdx'
-import Home from '../pages/Home/index.mdx'
+import Started from '../pages/Started/index.mdx'
 import { useRoutes } from 'react-router-dom'
 
 export const routes = [
   {
-    name: '首页',
+    name: '快速上手',
     path: '/',
-    element: <Home />
+    element: <Started />
   },
   {
     name: 'AntdModal',

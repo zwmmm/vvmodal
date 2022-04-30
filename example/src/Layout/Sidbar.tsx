@@ -10,6 +10,10 @@ const MenuItem = (props: { item: MenuItemType }) => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const active = item.path === pathname
+  const go = () => {
+    navigate(item.path)
+    window.scrollTo(0, 0)
+  }
   return (
     <Box
       p={3}
@@ -20,7 +24,7 @@ const MenuItem = (props: { item: MenuItemType }) => {
         backgroundColor: active ? 'highlight' : 'inherit'
       }}
       key={item.name}
-      onClick={() => navigate(item.path)}
+      onClick={go}
     >
       {item.name}
     </Box>
@@ -37,15 +41,26 @@ export default function () {
         backgroundColor: (t) => t.colors?.background
       }}
     >
-      <PackageInfo />
       <Box
         sx={{
-          padding: (t) => `${t.space?.[2]}px 0`
+          width: config.sidbarWidth,
+          height: '100%',
+          position: 'fixed',
+          left: 0,
+          top: 0,
+          zIndex: 100
         }}
       >
-        {routes.map((item) => (
-          <MenuItem item={item} key={item.path} />
-        ))}
+        <PackageInfo />
+        <Box
+          sx={{
+            padding: (t) => `${t.space?.[2]}px 0`
+          }}
+        >
+          {routes.map((item) => (
+            <MenuItem item={item} key={item.path} />
+          ))}
+        </Box>
       </Box>
     </Box>
   )

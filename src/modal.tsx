@@ -7,7 +7,7 @@ import React, {
   useState
 } from 'react'
 import {
-  DidShowCallbackType,
+  DidModalCallback,
   ModalComponentProps,
   PlainObject,
   UseModalProps
@@ -22,7 +22,6 @@ const ModalContext = createContext<UseModalProps | typeof defaultModalContext>(
 export const useModalData = (props?: PlainObject): ModalComponentProps => {
   const [visible, setVisible] = useState(false)
   const args = useRef(props || {})
-  const didShowCallback = useRef<DidShowCallbackType[]>([])
   const show = useCallback((props?: PlainObject) => {
     args.current = props || {}
     setVisible(true)
@@ -30,21 +29,12 @@ export const useModalData = (props?: PlainObject): ModalComponentProps => {
   const hide = useCallback(() => {
     setVisible(false)
   }, [])
-  const updateArgs = useCallback((payload?: PlainObject) => {
-    Object.assign(args.current, payload)
-  }, [])
-  const pushDidShowCallback = useCallback((cb: DidShowCallbackType) => {
-    didShowCallback.current.push(cb)
-  }, [])
 
   return {
     ...args.current,
     visible,
     show,
-    hide,
-    updateArgs,
-    didShowCallback: didShowCallback.current,
-    pushDidShowCallback
+    hide
   }
 }
 
@@ -56,11 +46,18 @@ export function useModal(): UseModalProps {
   return context
 }
 
-export function useModalShow(cb: DidShowCallbackType) {
+export function useModalShow(cb: DidModalCallback) {
   const modal = useModal()
   useEffect(() => {
-    modal.pushDidShowCallback(cb)
-  }, [])
+    modal.visible && cb()
+  }, [modal.visible])
+}
+
+export function useModalHide(cb: DidModalCallback) {
+  const modal = useModal()
+  useEffect(() => {
+    modal.visible || cb()
+  }, [modal.visible])
 }
 
 export const UkyouModalProvider: React.FC<{

@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react'
+import React, { useRef } from 'react'
 import {
   CreateModalType,
-  DidShowCallbackType,
+  ModalComponentProps,
   PlainObject,
   UkyouPromiseType,
   UseModalProps
@@ -10,22 +10,19 @@ import {
   UkyouModalProvider,
   useModal,
   useModalData,
+  useModalHide,
   useModalShow
 } from './modal'
 import { destroyModal, mountModal, register, UkyouProvider } from './global'
 
-export { useModal, useModalShow, UkyouProvider }
-
-const defaultFunction = () => {
-  console.error('请等Modal执行结束之后在调用')
-}
+export { useModal, useModalShow, UkyouProvider, useModalHide }
 
 const showCallbackMap = new Map<string, UkyouPromiseType>()
 
-function createPromise(): UkyouPromiseType {
-  let resolve: UkyouPromiseType['resolve'] = () => {}
-  let reject: UkyouPromiseType['reject'] = () => {}
-  let value = new Promise((_resolve, _reject) => {
+function createPromise<T = any>(): UkyouPromiseType<T> {
+  let resolve!: UkyouPromiseType['resolve']
+  let reject!: UkyouPromiseType['reject']
+  let value = new Promise<T>((_resolve, _reject) => {
     reject = _reject
     resolve = _resolve
   })
@@ -38,70 +35,61 @@ function createPromise(): UkyouPromiseType {
 
 let uidSeed = 0
 
-export function createModal<T = PlainObject>(
+export function createModal<T = PlainObject, TValue = any>(
   Comp: React.ComponentType
-): CreateModalType<T> {
-  const _modal = {
+): CreateModalType<T, TValue> {
+  const _modal: Omit<ModalComponentProps, 'pushDidShowCallback'> = {
     visible: false,
-    show: (payload?: PlainObject) => {
-      return new Promise(() => {})
+    show: () => {
+      throw new Error('show方法使用错误，请先加载组件')
     },
-    hide: defaultFunction,
-    updateArgs: (payload?: PlainObject) => {},
-    didShowCallback: []
+    hide: () => {
+      throw new Error('hide方法使用错误，请先加载组件')
+    }
   }
   const ukyouId = `__ukyou__${uidSeed++}`
-  const Modal: React.FC<T> = () => {
-    const [isRender, setRender] = useState(false)
+  const Modal: React.FC<T> = React.memo(() => {
+    const isRenderRef = useRef<boolean>(false)
     const modal = useModalData()
     Object.assign(_modal, modal)
-    const promise = showCallbackMap.get(ukyouId) || createPromise()
-    useEffect(() => {
-      setRender(true)
-    }, [])
-    if (!isRender) {
+    const promise = showCallbackMap.get(ukyouId) || createPromise<TValue>()
+    if (!isRenderRef.current) {
+      isRenderRef.current = true
       return null
     }
+    const value: UseModalProps<TValue> = {
+      ...modal,
+      destroy: () => destroyModal(ukyouId),
+      resolve: promise.resolve,
+      reject: promise.reject
+    }
     return (
-      <UkyouModalProvider
-        value={{
-          ...modal,
-          destroy: () => destroyModal(ukyouId),
-          reject: promise?.reject,
-          resolve: promise?.resolve
-        }}
-      >
+      <UkyouModalProvider value={value}>
         <Comp />
       </UkyouModalProvider>
     )
-  }
+  })
   return {
     ukyouId,
     Modal,
     modal: _modal,
     show: (payload?: T) => {
-      mountModal(ukyouId)
-      const showCallback = createPromise()
-      // promise 结束之后删除 释放内存
+      const showCallback = createPromise<TValue>()
       showCallback.value.finally(() => {
         showCallbackMap.delete(ukyouId)
       })
       showCallbackMap.set(ukyouId, showCallback)
-      setTimeout(() => {
+      mountModal(ukyouId).then(() => {
         _modal.show(payload)
-        _modal.didShowCallback.forEach((cb: DidShowCallbackType) => cb())
-      }, 0)
+      })
       return showCallback.value
-    },
-    updateArgs(payload?: PlainObject) {
-      _modal.updateArgs(payload)
     }
   }
 }
 
-export function createGlobalModal<T = any>(
+export function createGlobalModal<T = any, TValue = any>(
   Comp: React.ComponentType
-): CreateModalType<T> {
+): CreateModalType<T, TValue> {
   const res = createModal<T>(Comp)
   register(res.ukyouId, res.Modal)
   return res

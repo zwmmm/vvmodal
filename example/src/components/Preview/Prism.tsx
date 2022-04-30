@@ -6,7 +6,8 @@ import darkTheme from 'prism-react-renderer/themes/dracula'
 import lightTheme from 'prism-react-renderer/themes/github'
 
 const Line = styled('span', {
-  display: 'table-row'
+  display: 'table-row',
+  width: '100%'
 })
 
 const LineNo = styled('span', {
@@ -143,11 +144,15 @@ export default function ThemeUIPrism({
           >
             {tokensWithoutHighlightComments.map((line, i) => {
               const lineProps = getLineProps({ line, key: i })
-              if (shouldHighlightLine(line, i)) {
-                lineProps.className = `${lineProps.className} highlight`
-              }
               return (
-                <Line {...lineProps}>
+                <Line
+                  {...lineProps}
+                  sx={{
+                    background: shouldHighlightLine(line, i)
+                      ? 'highlight'
+                      : ''
+                  }}
+                >
                   <LineNo>{i + 1}</LineNo>
                   <LineContent>
                     {line.map((token, key) => (

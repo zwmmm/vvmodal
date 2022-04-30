@@ -8,48 +8,40 @@ export interface ModalComponentProps extends PlainObject {
   visible: boolean
   show: (props?: PlainObject) => void
   hide: () => void
-  updateArgs: (payload?: PlainObject) => void
-  didShowCallback: DidShowCallbackType[],
-  pushDidShowCallback: (cb: DidShowCallbackType) => void
 }
 
-export interface UseModalProps extends ModalComponentProps {
-  resolve: <T = any>(value?: T | PromiseLike<T>) => void,
+export interface UseModalProps<T = any> extends ModalComponentProps {
+  resolve: UkyouPromiseType<T>['resolve']
   reject: UkyouPromiseType['reject']
   destroy: () => void
 }
 
-export interface CreateModalType<T> {
+export interface CreateModalType<T, TValue> {
   ukyouId: string
   Modal: React.ComponentType<T>
   modal: Omit<ModalComponentProps, 'didShowCallback' | 'pushDidShowCallback'>
-  show: (payload?: T) => Promise<any>,
-  updateArgs: (payload?: T) => void,
+  show: (payload?: T) => Promise<TValue>
 }
 
 export interface UkyouPromiseType<T = any> {
-  resolve: (value?: T | PromiseLike<T>) => void,
+  resolve: (value?: T | PromiseLike<T>) => void
   reject: (reason?: any) => void
   value: Promise<T>
 }
 
-export type DidShowCallbackType = ()  => void
+export type DidModalCallback = () => void
 
 export interface GlobalModalType {
   value: PlainObject<{
-    visible: boolean,
+    visible: boolean
     args: PlainObject
-  }>,
-  register: (key: string, payload?: PlainObject) => void,
-  unregister: (key: string) => void,
+  }>
+  register: (key: string, payload?: PlainObject) => Promise<void>
+  unregister: (key: string) => Promise<void>
 }
 
 export interface GlobalModalItem {
   key: string
-  Comp: React.ComponentType,
+  Comp: React.ComponentType
   args: PlainObject
-}
-
-export interface CreateModalOptions {
-  global?: boolean
 }

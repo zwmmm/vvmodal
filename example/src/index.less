@@ -1,0 +1,12 @@
+@root-entry-name: default;
+
+@import 'antd/lib/style/mixins/index.less';
+@import "antd/lib/style/core/motion.less";
+@import "antd/lib/style/core/base.less";
+@import "antd/lib/style/core/iconfont.less";
+
+@import "antd/lib/style/components";
+
+*[class*='ant-(^scrolling-effect)'] {
+  @import 'antd/lib/style/core/global.less';
+}
