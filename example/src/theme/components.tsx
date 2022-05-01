@@ -1,8 +1,8 @@
 import React from 'react'
-import Prism from '../components/Preview/Prism'
+import Prism from '../components/Playground/Prism'
 import { Alert, Box, Message } from 'theme-ui'
-import Preview from '../components/Preview'
 import Blockquote from '../components/Blockquote'
+import Playground from '../components/Playground'
 
 const components = {
   code: Prism,
@@ -12,7 +12,7 @@ const components = {
   ),
   Message,
   Alert,
-  Preview
+  Playground
 }
 
 export default components

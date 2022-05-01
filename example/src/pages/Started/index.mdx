@@ -1,9 +1,6 @@
-import Preview from "../../components/Preview";
 import Simple from "./Simple";
-import SimpleRaw from './Simple?raw'
 import Resources from "./Resources";
-import ResourcesRaw from "./Resources?raw";
-import DetailRaw from "./Resources/Detail?raw";
+import Playground from "../../components/Playground";
 
 # react modal 数据管理
 
@@ -32,28 +29,22 @@ npm i ukyou
 
 ## 最简单的使用方法
 
-<Preview
+<Playground
   files={[
-    {
-      title: 'Simple.tsx',
-      code: SimpleRaw
-    }
+    'Started/Simple.tsx',
   ]}
-  code={<Simple/>}
-/>
+>
+  <Simple/>
+</Playground>
 
 ## 完整的 Resources 案例
 
-<Preview
+<Playground
   files={[
-    {
-      title: 'Resources.tsx',
-      code: ResourcesRaw
-    },
-    {
-      title: 'Detail.tsx',
-      code: DetailRaw
-    }
+    'Started/Resources/index.tsx',
+    'Started/Resources/Detail.tsx',
   ]}
-  code={<Resources/>}
-/>
+  layout="vertical"
+>
+  <Resources/>
+</Playground>

@@ -1,10 +1,5 @@
 import { RouteObject } from 'react-router-dom'
 
-export interface FileType {
-  title: string
-  code: string
-}
-
 export interface PlainObject<T = any> {
   [key: string]: T
 }
