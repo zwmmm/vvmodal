@@ -1,4 +1,6 @@
+// highlight-start
 import { antdModal, createGlobalModal, useModal } from 'ukyou'
+// highlight-end
 import { Button, Modal } from 'antd'
 
 const SimpleModal = createGlobalModal(() => {

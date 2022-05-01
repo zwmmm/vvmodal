@@ -6,7 +6,7 @@ import darkTheme from 'prism-react-renderer/themes/dracula'
 import lightTheme from 'prism-react-renderer/themes/github'
 
 const Line = styled('span', {
-  display: 'table-row',
+  display: 'block',
   width: '100%'
 })
 
@@ -44,7 +44,6 @@ const checkRanges = (range: number[], num: number) => {
 }
 
 type HighlightProps = React.ComponentPropsWithoutRef<typeof Highlight>
-// prism-react-renderer doesn't export `Token` type
 type Tokens = Parameters<HighlightProps['children']>[0]['tokens']
 type Token = Tokens[number][number]
 
@@ -77,10 +76,6 @@ export default function ThemeUIPrism({
         // eslint-disable-next-line array-callback-return
         .map(({ content }) => {
           if (content.trim() === '// highlight-start') {
-            /**
-             * Track highlighted lines, including countHighlightCommentsRemoved
-             * so we can keep track of multiple highlight-start and highlight-end blocks.
-             * */
             startEndRangesToHighlight.push(
               index - countHighlightCommentsRemoved
             )
@@ -88,10 +83,6 @@ export default function ThemeUIPrism({
             return true
           }
           if (content.trim() === '// highlight-end') {
-            /**
-             * Subtract by (countHighlightCommentsRemoved + 1) to account for
-             * the current highlight-end block being removed.
-             * */
             startEndRangesToHighlight.push(
               index - (countHighlightCommentsRemoved + 1)
             )
@@ -143,14 +134,13 @@ export default function ThemeUIPrism({
             sx={{ margin: 0 }}
           >
             {tokensWithoutHighlightComments.map((line, i) => {
+              const highlightLine = shouldHighlightLine(line, i)
               const lineProps = getLineProps({ line, key: i })
               return (
                 <Line
                   {...lineProps}
                   sx={{
-                    background: shouldHighlightLine(line, i)
-                      ? 'highlight'
-                      : ''
+                    background: highlightLine ? 'highlight' : ''
                   }}
                 >
                   <LineNo>{i + 1}</LineNo>
@@ -158,9 +148,10 @@ export default function ThemeUIPrism({
                     {line.map((token, key) => (
                       <span
                         {...getTokenProps({ token, key })}
-                        sx={
-                          token.empty ? { display: 'inline-block' } : undefined
-                        }
+                        sx={{
+                          display: token.empty ? 'inline-block' : 'initial',
+                          background: highlightLine ? 'highlight' : ''
+                        }}
                       />
                     ))}
                   </LineContent>
