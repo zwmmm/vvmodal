@@ -10,10 +10,12 @@ export default defineConfig(async () => {
   return {
     plugins: [
       react({
-        jsxImportSource: 'theme-ui'
+        jsxImportSource: 'theme-ui',
+        jsxRuntime: 'automatic'
       }),
       mdx.default({
         jsxImportSource: 'theme-ui',
+        jsxRuntime: 'automatic',
         providerImportSource: '@mdx-js/react'
       })
     ],

@@ -1,6 +1,30 @@
-export default {
-  title: 'ukyou 中文文档',
-  github: '',
-  codesandbox: '',
-  sidbarWidth: 300
+import { ConfigType } from './type'
+
+const config: ConfigType = {
+  title: 'vvModal',
+  logo: '',
+  repository: 'zwmmm/ukyou',
+  chapters: {
+    apis: [
+      {
+        name: 'Apis',
+        children: [
+          {
+            name: 'create',
+            path: '/apis'
+          },
+          {
+            name: 'show',
+            path: '/apis/show'
+          }
+        ]
+      }
+    ]
+  },
+  menus: {
+    '/': '首页',
+    '/apis': 'API'
+  }
 }
+
+export default config

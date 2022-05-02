@@ -1,66 +1,84 @@
 import { useLocation, useNavigate } from 'react-router-dom'
-import { routes } from '../routes/routes'
-import PackageInfo from './PackageInfo'
 import { Box } from 'theme-ui'
-import config from '../config'
-import { MenuItemType } from '../type'
+import { ChapterType, RouteType } from '../type'
+import React from 'react'
 
-const MenuItem = (props: { item: MenuItemType }) => {
-  const { item } = props
+const SubMenu: React.FC<{
+  title: string
+  children: React.ReactNode
+}> = (props) => {
+  return (
+    <>
+      <Box
+        pt={3}
+        pb={1}
+        sx={{
+          cursor: 'pointer',
+          fontWeight: 'bold'
+        }}
+      >
+        {props.title}
+      </Box>
+      {props.children}
+    </>
+  )
+}
+
+const MenuItem: React.FC<RouteType> = (props) => {
+  const { path, name } = props
   const navigate = useNavigate()
   const { pathname } = useLocation()
-  const active = item.path === pathname
+  const active = path === pathname
   const go = () => {
-    navigate(item.path)
+    navigate(path as string)
     window.scrollTo(0, 0)
   }
   return (
     <Box
-      p={3}
+      py={1}
+      my={1}
       sx={{
         cursor: 'pointer',
         fontWeight: 'bold',
-        color: active ? 'primary' : 'inherit',
-        backgroundColor: active ? 'highlight' : 'inherit'
+        color: active ? 'primary' : 'gray',
+        borderRadius: 4
       }}
-      key={item.name}
+      key={name}
       onClick={go}
     >
-      {item.name}
+      {name}
     </Box>
   )
 }
 
-export default function () {
+export default function Sidbar(props: { chapters: ChapterType[] }) {
   return (
     <Box
       sx={{
-        width: config.sidbarWidth,
-        overflowY: 'auto',
-        height: '100vh',
-        backgroundColor: (t) => t.colors?.background
+        backgroundColor: (t) => t.colors?.background,
+        pr: 3
       }}
     >
       <Box
         sx={{
-          width: config.sidbarWidth,
-          height: '100%',
-          position: 'fixed',
-          left: 0,
-          top: 0,
-          zIndex: 100
+          position: 'sticky',
+          height: 'calc(100vh - 80px)',
+          overflowY: 'auto',
+          top: 80
         }}
       >
-        <PackageInfo />
-        <Box
-          sx={{
-            padding: (t) => `${t.space?.[2]}px 0`
-          }}
-        >
-          {routes.map((item) => (
-            <MenuItem item={item} key={item.path} />
-          ))}
-        </Box>
+        {props.chapters.map((item) => {
+          if (!item.path) {
+            return (
+              <SubMenu title={item.name} key={item.name}>
+                {item?.children?.map((sub: RouteType) => (
+                  <MenuItem path={sub.path} name={sub.name} key={sub.name} />
+                ))}
+              </SubMenu>
+            )
+          }
+          return <MenuItem path={item.path} name={item.name} key={item.name} />
+        })}
       </Box>
     </Box>
   )

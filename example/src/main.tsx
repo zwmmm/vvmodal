@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { HashRouter } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 import { UkyouProvider } from 'ukyou'
 import App from './App'
 import { ThemeProvider } from 'theme-ui'
@@ -13,9 +13,9 @@ ReactDOM.render(
   <ThemeProvider theme={theme} components={components}>
     <ConfigProvider locale={zhCN} componentSize="small">
       <UkyouProvider>
-        <HashRouter>
+        <BrowserRouter>
           <App />
-        </HashRouter>
+        </BrowserRouter>
       </UkyouProvider>
     </ConfigProvider>
   </ThemeProvider>,

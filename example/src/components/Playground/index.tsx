@@ -4,10 +4,6 @@ import { Box, Flex, Grid, useColorMode } from 'theme-ui'
 import clsx from 'clsx'
 import Code from './Code'
 
-function getFileName(url: string) {
-  return url.split('/').pop()
-}
-
 const FileTabs = (props: {
   files: string[]
   activeIndex: number
@@ -40,7 +36,7 @@ const FileTabs = (props: {
             className={clsx({ active: activeIndex === index })}
             onClick={() => setIndex(index)}
           >
-            {getFileName(item)}
+            {item}
           </Box>
         )
       })}

@@ -1,6 +1,6 @@
 import { useAntdTable } from 'ahooks'
 import { Button, Form, Input, Space, Table } from 'antd'
-import Detail from './Detail'
+import Detail from './ResourcesModal'
 import axios from 'axios'
 
 export default function () {

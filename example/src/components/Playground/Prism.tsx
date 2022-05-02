@@ -6,7 +6,7 @@ import darkTheme from 'prism-react-renderer/themes/dracula'
 import lightTheme from 'prism-react-renderer/themes/github'
 
 const Line = styled('span', {
-  display: 'block',
+  display: 'table-row',
   width: '100%'
 })
 
@@ -149,8 +149,7 @@ export default function ThemeUIPrism({
                       <span
                         {...getTokenProps({ token, key })}
                         sx={{
-                          display: token.empty ? 'inline-block' : 'initial',
-                          background: highlightLine ? 'highlight' : ''
+                          display: token.empty ? 'inline-block' : 'initial'
                         }}
                       />
                     ))}
