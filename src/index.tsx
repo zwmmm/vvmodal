@@ -3,25 +3,25 @@ import {
   CreateModalType,
   ModalComponentProps,
   PlainObject,
-  UkyouPromiseType,
+  VVModalPromiseType,
   UseModalProps
 } from './types'
 import {
-  UkyouModalProvider,
+  ModalProvider,
   useModal,
   useModalData,
   useModalHide,
   useModalShow
 } from './modal'
-import { destroyModal, mountModal, register, UkyouProvider } from './global'
+import { destroyModal, mountModal, register, VVModalProvider } from './global'
 
-export { useModal, useModalShow, UkyouProvider, useModalHide }
+export { useModal, useModalShow, VVModalProvider, useModalHide }
 
-const showCallbackMap = new Map<string, UkyouPromiseType>()
+const showCallbackMap = new Map<string, VVModalPromiseType>()
 
-function createPromise<T = any>(): UkyouPromiseType<T> {
-  let resolve!: UkyouPromiseType['resolve']
-  let reject!: UkyouPromiseType['reject']
+function createPromise<T = any>(): VVModalPromiseType<T> {
+  let resolve!: VVModalPromiseType['resolve']
+  let reject!: VVModalPromiseType['reject']
   let value = new Promise<T>((_resolve, _reject) => {
     reject = _reject
     resolve = _resolve
@@ -47,39 +47,39 @@ export function createModal<T = PlainObject, TValue = any>(
       throw new Error('hide方法使用错误，请先加载组件')
     }
   }
-  const ukyouId = `__ukyou__${uidSeed++}`
+  const vvModalId = `__vvModal__${uidSeed++}`
   const Modal: React.FC<T> = React.memo(() => {
     const isRenderRef = useRef<boolean>(false)
     const modal = useModalData()
     Object.assign(_modal, modal)
-    const promise = showCallbackMap.get(ukyouId) || createPromise<TValue>()
+    const promise = showCallbackMap.get(vvModalId) || createPromise<TValue>()
     if (!isRenderRef.current) {
       isRenderRef.current = true
       return null
     }
     const value: UseModalProps<TValue> = {
       ...modal,
-      destroy: () => destroyModal(ukyouId),
+      destroy: () => destroyModal(vvModalId),
       resolve: promise.resolve,
       reject: promise.reject
     }
     return (
-      <UkyouModalProvider value={value}>
+      <ModalProvider value={value}>
         <Comp />
-      </UkyouModalProvider>
+      </ModalProvider>
     )
   })
   return {
-    ukyouId,
+    vvModalId,
     Modal,
     modal: _modal,
     show: (payload?: T) => {
       const showCallback = createPromise<TValue>()
       showCallback.value.finally(() => {
-        showCallbackMap.delete(ukyouId)
+        showCallbackMap.delete(vvModalId)
       })
-      showCallbackMap.set(ukyouId, showCallback)
-      mountModal(ukyouId).then(() => {
+      showCallbackMap.set(vvModalId, showCallback)
+      mountModal(vvModalId).then(() => {
         _modal.show(payload)
       })
       return showCallback.value
@@ -91,7 +91,7 @@ export function createGlobalModal<T = any, TValue = any>(
   Comp: React.ComponentType
 ): CreateModalType<T, TValue> {
   const res = createModal<T>(Comp)
-  register(res.ukyouId, res.Modal)
+  register(res.vvModalId, res.Modal)
   return res
 }
 

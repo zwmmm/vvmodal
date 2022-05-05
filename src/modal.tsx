@@ -60,7 +60,7 @@ export function useModalHide(cb: DidModalCallback) {
   }, [modal.visible])
 }
 
-export const UkyouModalProvider: React.FC<{
+export const ModalProvider: React.FC<{
   value: UseModalProps
   children: React.ReactChild
 }> = (props) => {

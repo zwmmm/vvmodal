@@ -1,6 +1,6 @@
 {
-  "name": "ukyou",
-  "version": "1.2.2",
+  "name": "vvModal",
+  "version": "1.0.0",
   "main": "index.js",
   "typings": "dist/index.d.ts",
   "scripts": {

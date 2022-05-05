@@ -19,29 +19,29 @@ export function getRegister(id: string) {
   return MODAL_REGISTRY.get(id)
 }
 
-export const defaultUkyouContext = Symbol('defaultUkyouContext')
-const UkyouContext = React.createContext<
-  GlobalModalType | typeof defaultUkyouContext
->(defaultUkyouContext)
+export const defaultVVModalContext = Symbol('defaultVVModalContext')
+const VVModalContext = React.createContext<
+  GlobalModalType | typeof defaultVVModalContext
+>(defaultVVModalContext)
 
 export let mountModal: GlobalModalType['register'] = (key: string) =>
   Promise.resolve()
 export let destroyModal: GlobalModalType['unregister'] = (key: string) =>
   Promise.resolve()
 
-export function UkyouProvider(props: React.ComponentProps<any>) {
+export function VVModalProvider(props: React.ComponentProps<any>) {
   const value = useGlobalModalData()
   mountModal = value.register
   destroyModal = value.unregister
   return (
-    <UkyouContext.Provider value={value}>
+    <VVModalContext.Provider value={value}>
       {props.children}
-      <UkyouPlaceholder />
-    </UkyouContext.Provider>
+      <VVModalPlaceholder />
+    </VVModalContext.Provider>
   )
 }
 
-export const UkyouPlaceholder = memo(() => {
+export const VVModalPlaceholder = memo(() => {
   const globalModal = useGlobalModal()
   const toRender: GlobalModalItem[] = useMemo(() => {
     const item: GlobalModalItem[] = []
@@ -66,9 +66,9 @@ export const UkyouPlaceholder = memo(() => {
 })
 
 export function useGlobalModal() {
-  const context = React.useContext(UkyouContext)
-  if (context === defaultUkyouContext) {
-    throw new Error('Component must be wrapped with <UkyouContext.Provider>')
+  const context = React.useContext(VVModalContext)
+  if (context === defaultVVModalContext) {
+    throw new Error('Component must be wrapped with <VVModalContext.Provider>')
   }
   return context
 }

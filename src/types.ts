@@ -11,19 +11,19 @@ export interface ModalComponentProps extends PlainObject {
 }
 
 export interface UseModalProps<T = any> extends ModalComponentProps {
-  resolve: UkyouPromiseType<T>['resolve']
-  reject: UkyouPromiseType['reject']
+  resolve: VVModalPromiseType<T>['resolve']
+  reject: VVModalPromiseType['reject']
   destroy: () => void
 }
 
 export interface CreateModalType<T, TValue> {
-  ukyouId: string
+  vvModalId: string
   Modal: React.ComponentType<T>
   modal: Omit<ModalComponentProps, 'didShowCallback' | 'pushDidShowCallback'>
   show: (payload?: T) => Promise<TValue>
 }
 
-export interface UkyouPromiseType<T = any> {
+export interface VVModalPromiseType<T = any> {
   resolve: (value?: T | PromiseLike<T>) => void
   reject: (reason?: any) => void
   value: Promise<T>
