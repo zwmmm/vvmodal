@@ -20,7 +20,7 @@
 ## 下载使用
 
 ```bash
-npm i ukyou
+npm i vvmodal
 ```
 
 ## 最简单的使用方法
