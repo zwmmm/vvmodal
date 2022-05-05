@@ -1,0 +1,26 @@
+{
+  "title": "vvModal",
+  "logo": "",
+  "repository": "zwmmm/ukyou",
+  "menus": {
+    "/": "首页",
+    "/apis": "API"
+  },
+  "chapters": {
+    "apis": [
+      {
+        "name": "Apis",
+        "children": [
+          {
+            "name": "create",
+            "path": "/apis"
+          },
+          {
+            "name": "show",
+            "path": "/apis/show"
+          }
+        ]
+      }
+    ]
+  }
+}
