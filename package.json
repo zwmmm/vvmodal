@@ -1,5 +1,5 @@
 {
-  "name": "vvModal",
+  "name": "vvmodal",
   "version": "1.0.0",
   "main": "index.js",
   "typings": "dist/index.d.ts",
