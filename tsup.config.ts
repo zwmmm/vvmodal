@@ -11,7 +11,7 @@ export default defineConfig([
     ...baseConfig,
     minify: true,
     entry: {
-      'ukyou.prod': './src/index.tsx'
+      'vvmodal.prod': './src/index.tsx'
     },
     dts: {
       entry: './src/index.tsx'
@@ -24,7 +24,7 @@ export default defineConfig([
     ...baseConfig,
     minify: false,
     entry: {
-      'ukyou.dev': './src/index.tsx'
+      'vvmodal.dev': './src/index.tsx'
     },
     define: {
       __DEV__: "'__DEV__'"

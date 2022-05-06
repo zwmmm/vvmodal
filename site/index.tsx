@@ -17,7 +17,7 @@ function SwtichAntdTheme() {
   )
 }
 
-export default function (props) {
+export default function (props: any) {
   return (
     <ConfigProvider locale={zhCN} componentSize="small">
       <VVModalProvider>

@@ -1,0 +1,17 @@
+## 链式调用
+
+除了使用props和modal进行交互，还可以使用promise的方式交互，比如创建一个用户结束之后需要刷新用户列表
+
+```tsx
+Modal.show().then(() => {
+  fetchList();
+})
+```
+
+## 具体的案例
+import Promise from '../../playground/Promise'
+
+<Playground files={['Promise.tsx']}>
+  <Promise />
+</Playground>
+

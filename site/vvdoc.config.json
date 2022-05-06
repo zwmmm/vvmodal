@@ -1,7 +1,7 @@
 {
   "title": "vvModal",
   "logo": "",
-  "repository": "zwmmm/ukyou",
+  "repository": "https://github.com/zwmmm/vvModal",
   "menus": {
     "/": "首页",
     "/apis": "API"
@@ -18,6 +18,27 @@
           {
             "name": "show",
             "path": "/apis/show"
+          },
+          {
+            "name": "antdModal",
+            "path": "/apis/antdModal"
+          }
+        ]
+      },
+      {
+        "name": "Hooks",
+        "children": [
+          {
+            "name": "useModal",
+            "path": "/apis/useModal"
+          },
+          {
+            "name": "useShow",
+            "path": "/apis/useShow"
+          },
+          {
+            "name": "useHide",
+            "path": "/apis/useHide"
           }
         ]
       }

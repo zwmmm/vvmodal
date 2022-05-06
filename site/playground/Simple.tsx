@@ -7,7 +7,7 @@ const SimpleModal = createGlobalModal(() => {
   const modal = useModal()
   return (
     <Modal {...antdModal(modal)} onOk={modal.hide}>
-      使用ukyou管理modal状态
+      使用vvmodal管理modal状态
     </Modal>
   )
 })
