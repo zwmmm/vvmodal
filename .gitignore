@@ -145,3 +145,7 @@ fabric.properties
 node_modules
 dist
 site/.vvDoc
+
+# Local Netlify folder
+.netlify
+!/site/dist/
