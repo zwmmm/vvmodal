@@ -4,25 +4,29 @@ import CreateGlobalModal from "../../playground/CreateGlobalModal";
 ## createGlobalModal
 
 创建一个全局modal，不需要自己挂载，但是需要增加一个Context（建议使用）
-```tsx
-import { VVModalProvider } from 'vvmodal'
-function App(props) {
-  return (
-    <VVModalProvider>
-      {props.children}
-    </VVModalProvider>
-  )
-}
-```
 
-演示
-<Playground files={['CreateGlobalModal.tsx']}>
-  <CreateGlobalModal />
-</Playground>
+- **类型**
+  ```ts
+  declare function createGlobalModal<T = any, TValue = any>(Comp: React.ComponentType): CreateModalType<T, TValue>;
+  ```
+  第一个泛型约束 show 方法的入参，第二个泛型约束 resolve 的入参
+
+- **演示**
+  <Playground files={['CreateGlobalModal.tsx']}>
+    <CreateGlobalModal />
+  </Playground>
 
 ## createModal
 
 创建一个普通的modal，需要自己挂载
-<Playground files={['CreateModal.tsx']}>
-  <CreateModal />
-</Playground>
+
+- **类型**
+  ```ts
+  declare function createModal<T = PlainObject, TValue = any>(Comp: React.ComponentType): CreateModalType<T, TValue>;
+    ```
+  第一个泛型约束 show 方法的入参，第二个泛型约束 resolve 的入参
+
+- **演示**
+  <Playground files={['CreateModal.tsx']}>
+    <CreateModal />
+  </Playground>

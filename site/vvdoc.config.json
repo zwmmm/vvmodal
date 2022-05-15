@@ -30,6 +30,10 @@
           {
             "name": "antdModal",
             "path": "/apis/antdModal"
+          },
+          {
+            "name": "antdDrawer",
+            "path": "/apis/antdDrawer"
           }
         ]
       },

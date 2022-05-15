@@ -1,0 +1,27 @@
+## useModal
+
+获取当前 modal 的状态
+
+- **类型**
+```ts
+function useModal(): {
+  visible: boolean;
+  show: (props?: object) => void;
+  hide: () => void;
+  resolve: (value?: any) => void;
+  reject: (reason?: any) => void;
+  [key: string]: any
+};
+```
+
+- **示例**
+```tsx
+const SimpleModal = createGlobalModal(() => {
+const modal = useModal()
+return (
+  <Modal {...antdModal(modal)}>
+    使用vvmodal管理modal状态
+  </Modal>
+  )
+})
+  ```

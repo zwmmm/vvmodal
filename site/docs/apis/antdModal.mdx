@@ -1,0 +1,24 @@
+## antdModal
+
+将 **useModal** 中的值包装成 **antd** **Modal** 组件所需要的值
+
+- **类型**
+```ts
+declare const antdModal: (modal: UseModalProps) => {
+  visible: UseModalProps['visible'];
+  onCancel: UseModalProps['hide'];
+  afterClose: UseModalProps['destroy'];
+};
+```
+
+- **示例**
+```tsx
+const SimpleModal = createGlobalModal(() => {
+const modal = useModal()
+return (
+  <Modal {...antdModal(modal)}>
+    使用vvmodal管理modal状态
+  </Modal>
+  )
+})
+  ```
