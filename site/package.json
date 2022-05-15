@@ -1,9 +1,8 @@
 {
-  "name": "vvDoc-demo",
+  "name": "vvmodule-doc",
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "postinstall": "vvdoc init",
     "dev": "vvdoc dev",
     "build": "vvdoc build"
   },
@@ -13,7 +12,7 @@
     "antd": "^4.20.2",
     "axios": "^0.27.2",
     "react-helmet": "^6.1.0",
-    "vvdoc": "^1.1.3",
+    "vvdoc": "^2.2.1",
     "vvmodal": "^1.0.0"
   }
 }

@@ -2,18 +2,26 @@
   "title": "vvModal",
   "logo": "",
   "repository": "https://github.com/zwmmm/vvModal",
-  "menus": {
-    "/": "首页",
-    "/apis": "API"
-  },
+  "menus": [
+    {
+      "text": "首页",
+      "active": "^/",
+      "path": "/"
+    },
+    {
+      "text": "API",
+      "active": "^/apis",
+      "path": "/apis/"
+    }
+  ],
   "chapters": {
-    "apis": [
+    "/apis/": [
       {
         "name": "Apis",
         "children": [
           {
             "name": "create",
-            "path": "/apis"
+            "path": "/apis/"
           },
           {
             "name": "show",

@@ -148,4 +148,3 @@ site/.vvDoc
 
 # Local Netlify folder
 .netlify
-!/site/dist/

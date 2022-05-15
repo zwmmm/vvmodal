@@ -42,9 +42,6 @@
   "files": [
     "dist"
   ],
-  "dependencies": {
-    "vvdoc": "^1.1.5"
-  },
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
   }
