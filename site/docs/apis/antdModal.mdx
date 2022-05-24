@@ -7,7 +7,7 @@
 declare const antdModal: (modal: UseModalProps) => {
   visible: UseModalProps['visible'];
   onCancel: UseModalProps['hide'];
-  afterClose: UseModalProps['destroy'];
+  onOk: UseModalProps['hide']
 };
 ```
 
