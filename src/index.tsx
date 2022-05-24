@@ -99,13 +99,13 @@ export const antdModal = (
   modal: UseModalProps
 ): {
   visible: UseModalProps['visible']
-  onCancel: UseModalProps['hide']
-  afterClose: UseModalProps['destroy']
+  onCancel: UseModalProps['hide'],
+  onOk: UseModalProps['hide']
 } => {
   return {
     visible: modal.visible,
     onCancel: modal.hide,
-    afterClose: modal.destroy
+    onOk: modal.hide
   }
 }
 
@@ -114,13 +114,9 @@ export const antdDrawer = (
 ): {
   visible: UseModalProps['visible']
   onClose: UseModalProps['hide']
-  afterVisibleChange: (visible: boolean) => void
 } => {
   return {
     visible: modal.visible,
     onClose: modal.hide,
-    afterVisibleChange: (visible: boolean) => {
-      visible || modal.destroy()
-    }
   }
 }
