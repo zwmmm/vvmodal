@@ -2956,10 +2956,10 @@ vite@^2.9.9:
   optionalDependencies:
     fsevents "~2.3.2"
 
-vvdoc@^2.3.3:
-  version "2.3.3"
-  resolved "https://registry.yarnpkg.com/vvdoc/-/vvdoc-2.3.3.tgz#b02403eb990225633e29234c3447d07f65329b06"
-  integrity sha512-+gnmCMETHB4kjYbKc4Gofou0psNAnVkqgYsEP7E9ocZyA5taZYIHtUhOSQ0TzmAoqrE401oPx2eJDFisxJhkoA==
+vvdoc@^2.3.4:
+  version "2.3.4"
+  resolved "https://registry.yarnpkg.com/vvdoc/-/vvdoc-2.3.4.tgz#7d2be707aa6c2e6be28e9da535b4d0e2657a80a7"
+  integrity sha512-HIIDmtL64ZNjHFZJyYIUwh7im6GYTewZ/F7CWlSMFzpLLgJEUjRH54wr4IlA5StzqtF2nYrBF5uUtYidw15AZw==
   dependencies:
     "@emotion/react" "^11.9.0"
     "@mdx-js/mdx" "^2.1.1"
