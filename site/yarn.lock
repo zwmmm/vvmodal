@@ -3311,10 +3311,10 @@ vite@^2.9.9:
   optionalDependencies:
     fsevents "~2.3.2"
 
-vvdoc@^2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/vvdoc/-/vvdoc-2.4.0.tgz#52bec66ebac8cb75509fc2bb827e03fa7e45c77a"
-  integrity sha512-WKo9XtwP2FKNJVHDvSLvKE0u3ajN5/JFnKLuu6RboxS54w8PYPpvWpT0gh93jfzOCPHJRz6Fk3kAWgUnx/zs3w==
+vvdoc@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/vvdoc/-/vvdoc-2.4.1.tgz#d9f889a905885a1ccd61bb6dec3c57443a2a7d5e"
+  integrity sha512-1daC3BqW+TIC+wUbpA3l1ed3QZpZ/50Mk69fFoWb8MkdjGsWH7jfwjcO3OyIicLAT4eSY6ravrvzgAEslA4VXA==
   dependencies:
     "@docsearch/css" "^3.1.0"
     "@docsearch/react" "^3.1.0"
