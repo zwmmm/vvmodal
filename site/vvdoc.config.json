@@ -2,6 +2,11 @@
   "title": "vvModal",
   "logo": "/vvmodal.png",
   "repository": "https://github.com/zwmmm/vvModal",
+  "docsearch": {
+    "appId": "",
+    "indexName": "",
+    "apiKey": ""
+  },
   "menus": [
     {
       "text": "首页",
