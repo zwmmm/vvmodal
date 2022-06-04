@@ -1,10 +1,11 @@
-// highlight-start
-import { antdModal, createGlobalModal, useModal } from 'vvmodal'
-// highlight-end
 import { Button, Modal } from 'antd'
+import { antdModal, createGlobalModal, useModal } from 'vvmodal'
 
 const SimpleModal = createGlobalModal(() => {
+  // highlight-start
   const modal = useModal()
+  // highlight-end
+
   return (
     <Modal {...antdModal(modal)} onOk={modal.hide}>
       使用vvmodal管理modal状态
