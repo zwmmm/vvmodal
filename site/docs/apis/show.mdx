@@ -1,37 +1,40 @@
-## show
-
 显示一个模态框
 
-- **类型**
-  ```ts
-  function show(args: object): Promise<object>
-  ```
+## 类型
 
-- **详细信息**
+```ts
+function show(args: object): Promise<object>
+```
 
-  入参是 **modal** 的 **props**，**modal** 组件内部可以使用 **useModal** 拿到传入的参数
+## 详细信息
 
-  返回一个 **Promise** 组件内部可以使用 **reject** 和 **resolve** 来修改 **Promise** 的状态
+入参是 `modal` 的 `props`，`modal` 组件内部可以使用 `useModal` 拿到传入的参数
 
-- **示例**
-  ```tsx
-  import { createGlobalModal, useModal } from 'vvmodal'
-  import { Button, Modal } from 'antd'
+返回一个 `Promise` 组件内部可以使用 `reject` 和 `resolve` 来修改 `Promise` 的状态
 
-  const SimpleModal = createGlobalModal(() => {
-  const { visible, title, resolve, reject } = useModal()
+## 示例
+
+```tsx
+
+// highlight-start
+import { createGlobalModal, useModal } from 'vvmodal'
+import { Button, Modal } from 'antd'
+// highlight-end
+
+const SimpleModal = createGlobalModal(() => {
+const { visible, title, resolve, reject } = useModal()
+return (
+  <Modal visible={visible} title={title} onOk={resolve} onCancal={reject}>
+    使用vvmodal管理modal状态
+  </Modal>
+  )
+})
+
+export default function App() {
   return (
-    <Modal visible={visible} title={title} onOk={resolve} onCancal={reject}>
-      使用vvmodal管理modal状态
-    </Modal>
-    )
-  })
-
-  export default function App() {
-    return (
-      <Button type="primary" onClick={() => SimpleModal.show({ title: '标题' })}>
-        点击展示
-      </Button>
-    )
-  }
-  ```
+    <Button type="primary" onClick={() => SimpleModal.show({ title: '标题' })}>
+      点击展示
+    </Button>
+  )
+}
+```

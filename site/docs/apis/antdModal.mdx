@@ -1,8 +1,7 @@
-## antdModal
+将 `useModal` 中的值包装成 `antd` `Modal` 组件所需要的值
 
-将 **useModal** 中的值包装成 **antd** **Modal** 组件所需要的值
+## 类型
 
-- **类型**
 ```ts
 declare const antdModal: (modal: UseModalProps) => {
   visible: UseModalProps['visible'];
@@ -11,7 +10,8 @@ declare const antdModal: (modal: UseModalProps) => {
 };
 ```
 
-- **示例**
+## 示例
+
 ```tsx
 const SimpleModal = createGlobalModal(() => {
 const modal = useModal()
@@ -21,4 +21,4 @@ return (
   </Modal>
   )
 })
-  ```
+```

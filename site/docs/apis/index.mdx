@@ -1,26 +1,13 @@
 
-## createGlobalModal
+创建一个全局 `modal`，不需要自己挂载，但是需要增加一个 `Context`（建议使用）
 
-创建一个全局modal，不需要自己挂载，但是需要增加一个Context（建议使用）
+## 类型
 
-- **类型**
-  ```ts
-  declare function createGlobalModal<T = any, TValue = any>(Comp: React.ComponentType): CreateModalType<T, TValue>;
-  ```
-  第一个泛型约束 show 方法的入参，第二个泛型约束 resolve 的入参
+```ts
+declare function createGlobalModal<T = any, TValue = any>(Comp: React.ComponentType): CreateModalType<T, TValue>;
+```
+第一个泛型约束 show 方法的入参，第二个泛型约束 resolve 的入参
 
-- **演示**
-  <Playground main="CreateGlobalModal.tsx" />
+## 演示
 
-## createModal
-
-创建一个普通的modal，需要自己挂载
-
-- **类型**
-  ```ts
-  declare function createModal<T = PlainObject, TValue = any>(Comp: React.ComponentType): CreateModalType<T, TValue>;
-    ```
-  第一个泛型约束 show 方法的入参，第二个泛型约束 resolve 的入参
-
-- **演示**
-  <Playground main="CreateModal.tsx" />
+<Playground main="CreateGlobalModal.tsx" />

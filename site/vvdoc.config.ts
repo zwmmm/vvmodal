@@ -1,4 +1,4 @@
-import { Config, BuildConfig } from 'vvdoc'
+import { Config } from 'vvdoc'
 
 export const config: Config = {
   title: 'vvModal',
@@ -27,8 +27,12 @@ export const config: Config = {
         name: 'Apis',
         children: [
           {
-            name: 'create',
+            name: 'createGlobalModal',
             path: '/apis/'
+          },
+          {
+            name: 'createModal',
+            path: '/apis/createModal'
           },
           {
             name: 'show',

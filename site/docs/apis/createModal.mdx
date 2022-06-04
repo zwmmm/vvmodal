@@ -1,0 +1,13 @@
+创建一个普通的 `modal`，需要自己挂载
+
+## 类型
+
+```ts
+declare function createModal<T = PlainObject, TValue = any>(Comp: React.ComponentType): CreateModalType<T, TValue>;
+```
+
+第一个泛型约束 show 方法的入参，第二个泛型约束 resolve 的入参
+
+## 演示
+
+<Playground main="CreateModal.tsx" />

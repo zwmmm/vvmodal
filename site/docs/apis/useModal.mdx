@@ -1,8 +1,7 @@
-## useModal
+获取当前 `modal` 的状态
 
-获取当前 modal 的状态
+## 类型
 
-- **类型**
 ```ts
 function useModal(): {
   visible: boolean;
@@ -14,7 +13,7 @@ function useModal(): {
 };
 ```
 
-- **示例**
+## 示例
 ```tsx
 const SimpleModal = createGlobalModal(() => {
 const modal = useModal()
@@ -24,4 +23,4 @@ return (
   </Modal>
   )
 })
-  ```
+```
