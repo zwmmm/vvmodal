@@ -23,9 +23,38 @@
 > npm i vvmodals
 ```
 
-## 最简单的使用方法
+## 基本用法
 
-<Playground main="Simple.tsx"/>
+```tsx
+import { Button, Modal } from 'antd'
+import { VVModalProvider, antdModal, createGlobalModal, useModal } from 'vvmodal'
+
+const SimpleModal = createGlobalModal(() => {
+  const modal = useModal()
+
+  return (
+    <Modal {...antdModal(modal)}>
+      使用vvmodal管理modal状态
+    </Modal>
+  )
+})
+
+export default function App() {
+  return (
+    // highlight-start
+    <VVModalProvider>
+      <Button type="primary" onClick={() => SimpleModal.show()}>
+        点击展示
+      </Button>
+    </VVModalProvider>
+    // highlight-end
+  )
+}
+```
+
+## 简单案例
+
+<Playground main="Simple.tsx" layout="vertical" />
 
 ## 完整的 Resources 案例
 
