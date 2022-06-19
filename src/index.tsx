@@ -1,11 +1,5 @@
 import React, { useRef } from 'react'
-import {
-  CreateModalType,
-  ModalComponentProps,
-  PlainObject,
-  VVModalPromiseType,
-  UseModalProps
-} from './types'
+import { destroyModal, mountModal, register, VVModalProvider } from './global'
 import {
   ModalProvider,
   useModal,
@@ -13,7 +7,13 @@ import {
   useModalHide,
   useModalShow
 } from './modal'
-import { destroyModal, mountModal, register, VVModalProvider } from './global'
+import {
+  CreateModalType,
+  ModalComponentProps,
+  PlainObject,
+  UseModalProps,
+  VVModalPromiseType
+} from './types'
 
 export { useModal, useModalShow, VVModalProvider, useModalHide }
 
@@ -83,6 +83,9 @@ export function createModal<T = PlainObject, TValue = any>(
         _modal.show(payload)
       })
       return showCallback.value
+    },
+    hide: () => {
+      _modal.hide()
     }
   }
 }
@@ -99,7 +102,7 @@ export const antdModal = (
   modal: UseModalProps
 ): {
   visible: UseModalProps['visible']
-  onCancel: UseModalProps['hide'],
+  onCancel: UseModalProps['hide']
   onOk: UseModalProps['hide']
 } => {
   return {
@@ -117,6 +120,6 @@ export const antdDrawer = (
 } => {
   return {
     visible: modal.visible,
-    onClose: modal.hide,
+    onClose: modal.hide
   }
 }

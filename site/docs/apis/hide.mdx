@@ -1,0 +1,35 @@
+隐藏一个模态框
+
+## 类型
+
+```ts
+function hide(): void
+```
+
+## 详细信息
+
+关闭弹窗，特殊场景下使用，最好在弹窗内部处理关闭
+
+## 示例
+
+```tsx
+import { createGlobalModal, useModal } from 'vvmodal'
+import { Button, Modal } from 'antd'
+
+const SimpleModal = createGlobalModal(() => {
+const { visible, title, resolve, reject } = useModal()
+return (
+  <Modal visible={visible} title={title} onOk={resolve} onCancal={reject}>
+    使用vvmodal管理modal状态
+  </Modal>
+  )
+})
+
+export default function App() {
+  return (
+    <Button type="primary" onClick={() => SimpleModal.hide()}>
+      点击关闭
+    </Button>
+  )
+}
+```

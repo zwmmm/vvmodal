@@ -39,6 +39,10 @@ export const config: Config = {
             path: '/apis/show'
           },
           {
+            name: 'hide',
+            path: '/apis/hide'
+          },
+          {
             name: 'antdModal',
             path: '/apis/antdModal'
           },

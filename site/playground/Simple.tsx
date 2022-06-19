@@ -1,4 +1,4 @@
-import { Button, Modal } from 'antd'
+import { Button, Modal, Space } from 'antd'
 import { antdModal, createGlobalModal, useModal } from 'vvmodal'
 
 const SimpleModal = createGlobalModal(() => {
@@ -14,9 +14,14 @@ const SimpleModal = createGlobalModal(() => {
 })
 
 export default function App() {
+  const onClick = () => {
+    SimpleModal.show()
+  }
   return (
-    <Button type="primary" onClick={() => SimpleModal.show()}>
-      点击展示
-    </Button>
+    <Space>
+      <Button type="primary" onClick={onClick}>
+        点击展示
+      </Button>
+    </Space>
   )
 }

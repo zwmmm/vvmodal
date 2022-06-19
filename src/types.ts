@@ -20,7 +20,8 @@ export interface CreateModalType<T, TValue> {
   vvModalId: string
   Modal: React.ComponentType<T>
   modal: Omit<ModalComponentProps, 'didShowCallback' | 'pushDidShowCallback'>
-  show: (payload?: T) => Promise<TValue>
+  show: (payload?: T) => Promise<TValue>,
+  hide: ModalComponentProps['hide']
 }
 
 export interface VVModalPromiseType<T = any> {

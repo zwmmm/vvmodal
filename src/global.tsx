@@ -24,10 +24,8 @@ const VVModalContext = React.createContext<
   GlobalModalType | typeof defaultVVModalContext
 >(defaultVVModalContext)
 
-export let mountModal: GlobalModalType['register'] = (key: string) =>
-  Promise.resolve()
-export let destroyModal: GlobalModalType['unregister'] = (key: string) =>
-  Promise.resolve()
+export let mountModal: GlobalModalType['register']
+export let destroyModal: GlobalModalType['unregister']
 
 export function VVModalProvider(props: React.ComponentProps<any>) {
   const value = useGlobalModalData()

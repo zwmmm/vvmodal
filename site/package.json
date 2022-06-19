@@ -13,7 +13,7 @@
     "axios": "^0.27.2",
     "react-helmet": "^6.1.0",
     "theme-ui": "^0.14.5",
-    "vvmodal": "^1.0.0"
+    "vvmodal": "file:../"
   },
   "devDependencies": {
     "vvdoc": "^2.4.5"
