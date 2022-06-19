@@ -3405,10 +3405,10 @@ vite@^2.9.9:
   optionalDependencies:
     fsevents "~2.3.2"
 
-vvdoc@^2.4.5:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/vvdoc/-/vvdoc-2.6.0.tgz#04e93d11489788468f4f0cf3f830d6cc33166aba"
-  integrity sha512-huOMzKu8YkLEbMIcvfPzEJYhDktn0XFA+N1b95+3ILzycEKrxV3uZklzvWqwoEWDGwzDC2RfM17UAkBSwILj9Q==
+vvdoc@^2.6.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/vvdoc/-/vvdoc-2.6.1.tgz#a951f352c1e73fd125b82e9cb476caee2a343953"
+  integrity sha512-G6zs3cKnfQOFd38Ge7IbcDjQ0bHP0B6F1qP9YsW+bWc+bP6KF87sxSRaYv2KKfO+ZckhYTPZBdEy83SiDUZr9A==
   dependencies:
     "@docsearch/css" "^3.1.0"
     "@docsearch/react" "^3.1.0"
@@ -3438,8 +3438,10 @@ vvdoc@^2.4.5:
     unist-util-visit "^4.1.0"
     vite "^2.9.9"
 
-"vvmodal@file:..":
+vvmodal@*:
   version "1.2.0"
+  resolved "https://registry.yarnpkg.com/vvmodal/-/vvmodal-1.2.0.tgz#6629efe757faae0bc002617b9d2d721b692a7b81"
+  integrity sha512-g0hUthGjtGf0NQG14fija5UOMqrSQMKhb1BWktVkZMR1j63gARiofVC1lbHomW8kO3PLyQUVO2q6PQk+/70jYQ==
 
 wrappy@1:
   version "1.0.2"

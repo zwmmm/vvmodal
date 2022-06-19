@@ -16,6 +16,6 @@
     "vvmodal": "*"
   },
   "devDependencies": {
-    "vvdoc": "^2.4.5"
+    "vvdoc": "^2.6.1"
   }
 }
