@@ -12,10 +12,9 @@
     "antd": "^4.20.2",
     "axios": "^0.27.2",
     "react-helmet": "^6.1.0",
-    "theme-ui": "^0.14.5",
     "vvmodal": "*"
   },
   "devDependencies": {
-    "vvdoc": "^2.6.1"
+    "vvdoc": "*"
   }
 }
