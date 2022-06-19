@@ -21,7 +21,7 @@ npm i vvmodal
 ## 最简单的使用方法
 
 ```tsx
-import { antdModal, createGlobalModal, useModal, UkyouProvider } from "vvmodal";
+import { antdModal, createGlobalModal, useModal, VVModalProvider } from "vvmodal";
 import { Button, Modal } from "antd";
 
 const Modal = createGlobalModal(() => {
@@ -35,9 +35,9 @@ const Modal = createGlobalModal(() => {
 
 function App() {
   return (
-    <UkyouProvider>
+    <VVModalProvider>
       <Button onClick={() => Modal.show()}>点击展示</Button>
-    </UkyouProvider>
+    </VVModalProvider>
   )
 }
 ```
