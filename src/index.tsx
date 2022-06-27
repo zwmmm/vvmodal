@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import { destroyModal, mountModal, register, VVModalProvider } from './global'
 import {
   ModalProvider,
@@ -49,14 +49,9 @@ export function createModal<T = PlainObject, TValue = any>(
   }
   const vvModalId = `__vvModal__${uidSeed++}`
   const Modal: React.FC<T> = React.memo(() => {
-    const isRenderRef = useRef<boolean>(false)
     const modal = useModalData()
     Object.assign(_modal, modal)
     const promise = showCallbackMap.get(vvModalId) || createPromise<TValue>()
-    if (!isRenderRef.current) {
-      isRenderRef.current = true
-      return null
-    }
     const value: UseModalProps<TValue> = {
       ...modal,
       destroy: () => destroyModal(vvModalId),
