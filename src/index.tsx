@@ -48,7 +48,7 @@ export function createModal<T = PlainObject, TValue = any>(
     }
   }
   const vvModalId = `__vvModal__${uidSeed++}`
-  const Modal: React.FC<T> = React.memo(() => {
+  const Modal: React.FC = () => {
     const modal = useModalData()
     Object.assign(_modal, modal)
     const promise = showCallbackMap.get(vvModalId) || createPromise<TValue>()
@@ -63,7 +63,7 @@ export function createModal<T = PlainObject, TValue = any>(
         <Comp />
       </ModalProvider>
     )
-  })
+  }
   return {
     vvModalId,
     Modal,
@@ -74,9 +74,13 @@ export function createModal<T = PlainObject, TValue = any>(
         showCallbackMap.delete(vvModalId)
       })
       showCallbackMap.set(vvModalId, showCallback)
-      mountModal(vvModalId).then(() => {
+      if (mountModal) {
+        mountModal(vvModalId).then(() => {
+          _modal.show(payload)
+        })
+      } else {
         _modal.show(payload)
-      })
+      }
       return showCallback.value
     },
     hide: () => {
