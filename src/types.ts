@@ -18,7 +18,7 @@ export interface UseModalProps<T = any> extends ModalComponentProps {
 
 export interface CreateModalType<T, TValue> {
   vvModalId: string
-  Modal: React.ComponentType
+  Modal: React.FC
   modal: Omit<ModalComponentProps, 'didShowCallback' | 'pushDidShowCallback'>
   show: (payload?: T) => Promise<TValue>
   hide: ModalComponentProps['hide']
