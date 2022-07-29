@@ -35,9 +35,11 @@ function createPromise<T = any>(): VVModalPromiseType<T> {
 
 let uidSeed = 0
 
-export function createModal<T = PlainObject, TValue = any>(
-  Comp: React.ComponentType
-): CreateModalType<T, TValue> {
+export function createModal<
+  T = PlainObject,
+  TValue = any,
+  TReturn = PlainObject
+>(Comp: React.ComponentType): CreateModalType<T, TValue, TReturn> {
   const _modal: Omit<ModalComponentProps, 'pushDidShowCallback'> = {
     visible: false,
     show: () => {
@@ -64,6 +66,7 @@ export function createModal<T = PlainObject, TValue = any>(
       </ModalProvider>
     )
   }
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   return {
     vvModalId,
     Modal,
@@ -86,13 +89,13 @@ export function createModal<T = PlainObject, TValue = any>(
     hide: () => {
       _modal.hide()
     }
-  }
+  } as CreateModalType<T, TValue, TReturn>
 }
 
-export function createGlobalModal<T = any, TValue = any>(
+export function createGlobalModal<T = any, TValue = any, TReturn = PlainObject>(
   Comp: React.ComponentType
-): CreateModalType<T, TValue> {
-  const res = createModal<T>(Comp)
+) {
+  const res = createModal<T, TValue, TReturn>(Comp)
   register(res.vvModalId, res.Modal)
   return res
 }

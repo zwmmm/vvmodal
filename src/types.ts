@@ -16,13 +16,13 @@ export interface UseModalProps<T = any> extends ModalComponentProps {
   destroy: () => void
 }
 
-export interface CreateModalType<T, TValue> {
+export type CreateModalType<T, TValue = any, TReturn = PlainObject> = {
   vvModalId: string
   Modal: React.FC
   modal: Omit<ModalComponentProps, 'didShowCallback' | 'pushDidShowCallback'>
   show: (payload?: T) => Promise<TValue>
   hide: ModalComponentProps['hide']
-}
+} & TReturn
 
 export interface VVModalPromiseType<T = any> {
   resolve: (value?: T | PromiseLike<T>) => void
@@ -46,3 +46,5 @@ export interface GlobalModalItem {
   Comp: React.ComponentType
   args: PlainObject
 }
+
+export type MergeType<T1, T2> = T1 | T2
