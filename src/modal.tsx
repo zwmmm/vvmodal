@@ -6,22 +6,20 @@ import React, {
   useRef,
   useState
 } from 'react'
-import {
-  DidModalCallback,
-  ModalComponentProps,
-  PlainObject,
-  UseModalProps
-} from './types'
+import { DidModalCallback, PlainObject, UseModalProps } from './types'
 
 const defaultModalContext = Symbol('defaultModalContext')
 
-const ModalContext = createContext<UseModalProps | typeof defaultModalContext>(
+type DefaultModalContextType = typeof defaultModalContext
+
+const ModalContext = createContext<UseModalProps | DefaultModalContextType>(
   defaultModalContext
 )
 
-export const useModalData = (props?: PlainObject): ModalComponentProps => {
+export function useModalData<T = PlainObject>() {
   const [visible, setVisible] = useState(false)
-  const args = useRef(props || {})
+  const args = useRef<T | PlainObject>({})
+  const defaultArgs = useRef<T | PlainObject>({})
   const show = useCallback((props?: PlainObject) => {
     args.current = props || {}
     setVisible(true)
@@ -29,21 +27,29 @@ export const useModalData = (props?: PlainObject): ModalComponentProps => {
   const hide = useCallback(() => {
     setVisible(false)
   }, [])
+  const setDefaultArgs = useCallback((val: PlainObject) => {
+    defaultArgs.current = val
+  }, [])
 
   return {
     ...args.current,
+    ...defaultArgs.current,
     visible,
     show,
-    hide
+    hide,
+    setDefaultArgs
   }
 }
 
-export function useModal(): UseModalProps {
+export function useModal<T = PlainObject, TResolve = any>(): UseModalProps<
+  T,
+  TResolve
+> {
   const context = useContext(ModalContext)
   if (context === defaultModalContext) {
     throw new Error('Component must be wrapped with <ModalContext.Provider>')
   }
-  return context
+  return context as UseModalProps<T, TResolve>
 }
 
 export function useModalShow(cb: DidModalCallback) {
@@ -60,10 +66,10 @@ export function useModalHide(cb: DidModalCallback) {
   }, [modal.visible])
 }
 
-export const ModalProvider: React.FC<{
-  value: UseModalProps
+export const ModalProvider = <T extends UseModalProps>(props: {
+  value: T
   children: React.ReactChild
-}> = (props) => {
+}) => {
   return (
     <ModalContext.Provider value={props.value}>
       {props.children}

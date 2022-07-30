@@ -8,21 +8,17 @@ export interface ModalComponentProps extends PlainObject {
   visible: boolean
   show: (props?: PlainObject) => void
   hide: () => void
+  setDefaultArgs: (props: PlainObject) => void
 }
 
-export interface UseModalProps<T = any> extends ModalComponentProps {
-  resolve: VVModalPromiseType<T>['resolve']
+export type UseModalProps<
+  T = PlainObject,
+  TResolve = any
+> = ModalComponentProps & {
+  resolve: VVModalPromiseType<TResolve>['resolve']
   reject: VVModalPromiseType['reject']
   destroy: () => void
-}
-
-export type CreateModalType<T, TValue = any, TReturn = PlainObject> = {
-  vvModalId: string
-  Modal: React.FC
-  modal: Omit<ModalComponentProps, 'didShowCallback' | 'pushDidShowCallback'>
-  show: (payload?: T) => Promise<TValue>
-  hide: ModalComponentProps['hide']
-} & TReturn
+} & T
 
 export interface VVModalPromiseType<T = any> {
   resolve: (value?: T | PromiseLike<T>) => void
@@ -46,5 +42,3 @@ export interface GlobalModalItem {
   Comp: React.ComponentType
   args: PlainObject
 }
-
-export type MergeType<T1, T2> = T1 | T2

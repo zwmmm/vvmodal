@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { destroyModal, mountModal, register, VVModalProvider } from './global'
 import {
   ModalProvider,
@@ -8,7 +8,6 @@ import {
   useModalShow
 } from './modal'
 import {
-  CreateModalType,
   ModalComponentProps,
   PlainObject,
   UseModalProps,
@@ -35,11 +34,7 @@ function createPromise<T = any>(): VVModalPromiseType<T> {
 
 let uidSeed = 0
 
-export function createModal<
-  T = PlainObject,
-  TValue = any,
-  TReturn = PlainObject
->(Comp: React.ComponentType): CreateModalType<T, TValue, TReturn> {
+export function createModal<T = PlainObject>(Comp: React.ComponentType) {
   const _modal: Omit<ModalComponentProps, 'pushDidShowCallback'> = {
     visible: false,
     show: () => {
@@ -50,11 +45,13 @@ export function createModal<
     }
   }
   const vvModalId = `__vvModal__${uidSeed++}`
+  let ref
   const Modal: React.FC = () => {
+    ref = useRef()
     const modal = useModalData()
     Object.assign(_modal, modal)
-    const promise = showCallbackMap.get(vvModalId) || createPromise<TValue>()
-    const value: UseModalProps<TValue> = {
+    const promise = showCallbackMap.get(vvModalId) || createPromise()
+    const value = {
       ...modal,
       destroy: () => destroyModal(vvModalId),
       resolve: promise.resolve,
@@ -62,17 +59,18 @@ export function createModal<
     }
     return (
       <ModalProvider value={value}>
-        <Comp />
+        {/* @ts-ignore */}
+        <Comp ref={ref} />
       </ModalProvider>
     )
   }
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
   return {
     vvModalId,
+    ref,
     Modal,
     modal: _modal,
     show: (payload?: T) => {
-      const showCallback = createPromise<TValue>()
+      const showCallback = createPromise()
       showCallback.value.finally(() => {
         showCallbackMap.delete(vvModalId)
       })
@@ -88,14 +86,15 @@ export function createModal<
     },
     hide: () => {
       _modal.hide()
+    },
+    setDefaultArgs: (props: PlainObject) => {
+      _modal.setDefaultArgs(props)
     }
-  } as CreateModalType<T, TValue, TReturn>
+  }
 }
 
-export function createGlobalModal<T = any, TValue = any, TReturn = PlainObject>(
-  Comp: React.ComponentType
-) {
-  const res = createModal<T, TValue, TReturn>(Comp)
+export function createGlobalModal<T = PlainObject>(Comp: React.ComponentType) {
+  const res = createModal<T>(Comp)
   register(res.vvModalId, res.Modal)
   return res
 }

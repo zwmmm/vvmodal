@@ -3356,10 +3356,8 @@ vvdoc@*:
     unist-util-visit "^4.1.0"
     vite "^2.9.9"
 
-vvmodal@*:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/vvmodal/-/vvmodal-1.2.0.tgz#6629efe757faae0bc002617b9d2d721b692a7b81"
-  integrity sha512-g0hUthGjtGf0NQG14fija5UOMqrSQMKhb1BWktVkZMR1j63gARiofVC1lbHomW8kO3PLyQUVO2q6PQk+/70jYQ==
+"vvmodal@file:..":
+  version "1.3.3"
 
 wrappy@1:
   version "1.0.2"
