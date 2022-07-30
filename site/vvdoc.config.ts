@@ -43,6 +43,10 @@ export const config: Config = {
             path: '/apis/hide'
           },
           {
+            name: 'ref',
+            path: '/apis/ref'
+          },
+          {
             name: 'antdModal',
             path: '/apis/antdModal'
           },

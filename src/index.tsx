@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { createRef } from 'react'
 import { destroyModal, mountModal, register, VVModalProvider } from './global'
 import {
   ModalProvider,
@@ -34,7 +34,9 @@ function createPromise<T = any>(): VVModalPromiseType<T> {
 
 let uidSeed = 0
 
-export function createModal<T = PlainObject>(Comp: React.ComponentType) {
+export function createModal<T = PlainObject>(
+  Comp: React.ComponentType | React.ForwardRefExoticComponent<any>
+) {
   const _modal: Omit<ModalComponentProps, 'pushDidShowCallback'> = {
     visible: false,
     show: () => {
@@ -45,9 +47,8 @@ export function createModal<T = PlainObject>(Comp: React.ComponentType) {
     }
   }
   const vvModalId = `__vvModal__${uidSeed++}`
-  let ref
+  const ref = createRef<any>()
   const Modal: React.FC = () => {
-    ref = useRef()
     const modal = useModalData()
     Object.assign(_modal, modal)
     const promise = showCallbackMap.get(vvModalId) || createPromise()
@@ -88,7 +89,7 @@ export function createModal<T = PlainObject>(Comp: React.ComponentType) {
       _modal.hide()
     },
     setDefaultArgs: (props: PlainObject) => {
-      _modal.setDefaultArgs(props)
+      _modal?.setDefaultArgs(props)
     }
   }
 }

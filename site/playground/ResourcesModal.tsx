@@ -3,15 +3,9 @@ import { Form, Input, Modal, Spin } from 'antd'
 import { useState } from 'react'
 import axios from 'axios'
 
-export default createGlobalModal<
-  {
-    id?: string
-  },
-  {
-    name: string
-    phone: string
-  }
->(() => {
+export default createGlobalModal<{
+  id?: string
+}>(() => {
   const modal = useModal()
   const [form] = Form.useForm()
   const submit = async () => {
@@ -57,14 +51,14 @@ export default createGlobalModal<
             name="name"
             rules={[{ required: true, message: '请输入名称' }]}
           >
-            <Input />
+            <Input/>
           </Form.Item>
           <Form.Item
             label="手机号"
             name="phone"
             rules={[{ required: true, message: '请出入手机号' }]}
           >
-            <Input />
+            <Input/>
           </Form.Item>
         </Form>
       </Spin>
