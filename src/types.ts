@@ -11,7 +11,7 @@ export interface ModalComponentProps extends PlainObject {
   setDefaultArgs: (props: PlainObject) => void
 }
 
-export type UseModalProps<
+export type ModalProps<
   T = PlainObject,
   TResolve = any
 > = ModalComponentProps & {
@@ -41,4 +41,14 @@ export interface GlobalModalItem {
   key: string
   Comp: React.ComponentType
   args: PlainObject
+}
+
+export interface MT<T = PlainObject, TResolve = any> {
+  vvModalId: string
+  ref: any
+  Modal: React.ComponentType
+  modal: ModalComponentProps
+  show: (payload?: T) => Promise<TResolve>
+  hide: () => void
+  setDefaultArgs: (props: PlainObject) => void
 }

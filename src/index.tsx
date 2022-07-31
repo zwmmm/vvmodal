@@ -9,12 +9,13 @@ import {
 } from './modal'
 import {
   ModalComponentProps,
+  ModalProps,
+  MT,
   PlainObject,
-  UseModalProps,
   VVModalPromiseType
 } from './types'
 
-export { useModal, useModalShow, VVModalProvider, useModalHide }
+export { useModal, useModalShow, VVModalProvider, useModalHide, MT, ModalProps }
 
 const showCallbackMap = new Map<string, VVModalPromiseType>()
 
@@ -34,20 +35,23 @@ function createPromise<T = any>(): VVModalPromiseType<T> {
 
 let uidSeed = 0
 
-export function createModal<T = PlainObject>(
-  Comp: React.ComponentType | React.ForwardRefExoticComponent<any>
+export function createModal<T = PlainObject, TResolve = any, TRef = any>(
+  Comp: React.ComponentType | React.ForwardRefRenderFunction<any, TRef>
 ) {
-  const _modal: Omit<ModalComponentProps, 'pushDidShowCallback'> = {
+  const _modal: ModalComponentProps = {
     visible: false,
     show: () => {
       throw new Error('show方法使用错误，请先加载组件')
     },
     hide: () => {
       throw new Error('hide方法使用错误，请先加载组件')
+    },
+    setDefaultArgs: () => {
+      throw new Error('setDefaultArgs方法使用错误，请先加载组件')
     }
   }
   const vvModalId = `__vvModal__${uidSeed++}`
-  const ref = createRef<any>()
+  const ref = createRef<TRef>()
   const Modal: React.FC = () => {
     const modal = useModalData()
     Object.assign(_modal, modal)
@@ -58,10 +62,12 @@ export function createModal<T = PlainObject>(
       resolve: promise.resolve,
       reject: promise.reject
     }
+    // @ts-ignore
+    const isForwardRef = Comp?.$$typeof === Symbol.for('react.forward_ref')
     return (
       <ModalProvider value={value}>
         {/* @ts-ignore */}
-        <Comp ref={ref} />
+        {isForwardRef ? <Comp ref={ref} /> : <Comp />}
       </ModalProvider>
     )
   }
@@ -70,7 +76,7 @@ export function createModal<T = PlainObject>(
     ref,
     Modal,
     modal: _modal,
-    show: (payload?: T) => {
+    show: (payload?: T): Promise<TResolve> => {
       const showCallback = createPromise()
       showCallback.value.finally(() => {
         showCallbackMap.delete(vvModalId)
@@ -88,24 +94,26 @@ export function createModal<T = PlainObject>(
     hide: () => {
       _modal.hide()
     },
-    setDefaultArgs: (props: PlainObject) => {
+    setDefaultArgs: (props: T) => {
       _modal?.setDefaultArgs(props)
     }
   }
 }
 
-export function createGlobalModal<T = PlainObject>(Comp: React.ComponentType) {
-  const res = createModal<T>(Comp)
+export function createGlobalModal<T = PlainObject, TResolve = any, TRef = any>(
+  Comp: React.ComponentType | React.ForwardRefRenderFunction<T, TRef>
+) {
+  const res = createModal<T, TResolve, TRef>(Comp)
   register(res.vvModalId, res.Modal)
   return res
 }
 
 export const antdModal = (
-  modal: UseModalProps
+  modal: ModalProps
 ): {
-  visible: UseModalProps['visible']
-  onCancel: UseModalProps['hide']
-  onOk: UseModalProps['hide']
+  visible: ModalProps['visible']
+  onCancel: ModalProps['hide']
+  onOk: ModalProps['hide']
 } => {
   return {
     visible: modal.visible,
@@ -115,10 +123,10 @@ export const antdModal = (
 }
 
 export const antdDrawer = (
-  modal: UseModalProps
+  modal: ModalProps
 ): {
-  visible: UseModalProps['visible']
-  onClose: UseModalProps['hide']
+  visible: ModalProps['visible']
+  onClose: ModalProps['hide']
 } => {
   return {
     visible: modal.visible,

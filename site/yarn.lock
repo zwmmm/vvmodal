@@ -3356,10 +3356,8 @@ vvdoc@*:
     unist-util-visit "^4.1.0"
     vite "^2.9.9"
 
-vvmodal@beta:
+"vvmodal@file:..":
   version "1.3.3-beta.3"
-  resolved "http://npm.weimob.com:80/vvmodal/-/vvmodal-1.3.3-beta.3.tgz#cb1114cdfc92896d0333769f3253187af1cd1379"
-  integrity sha512-BUwj4Kfij9L0ndisK12BA85DUgVT93SBKKXwiVwquLUNbCeatCmpdBfUzHO9av8vD+STZeiDlCtchld64BU1gg==
 
 wrappy@1:
   version "1.0.2"

@@ -6,13 +6,13 @@ import React, {
   useRef,
   useState
 } from 'react'
-import { DidModalCallback, PlainObject, UseModalProps } from './types'
+import { DidModalCallback, PlainObject, ModalProps } from './types'
 
 const defaultModalContext = Symbol('defaultModalContext')
 
 type DefaultModalContextType = typeof defaultModalContext
 
-const ModalContext = createContext<UseModalProps | DefaultModalContextType>(
+const ModalContext = createContext<ModalProps | DefaultModalContextType>(
   defaultModalContext
 )
 
@@ -41,7 +41,7 @@ export function useModalData<T = PlainObject>() {
   }
 }
 
-export function useModal<T = PlainObject, TResolve = any>(): UseModalProps<
+export function useModal<T = PlainObject, TResolve = any>(): ModalProps<
   T,
   TResolve
 > {
@@ -49,7 +49,7 @@ export function useModal<T = PlainObject, TResolve = any>(): UseModalProps<
   if (context === defaultModalContext) {
     throw new Error('Component must be wrapped with <ModalContext.Provider>')
   }
-  return context as UseModalProps<T, TResolve>
+  return context as ModalProps<T, TResolve>
 }
 
 export function useModalShow(cb: DidModalCallback) {
@@ -66,7 +66,7 @@ export function useModalHide(cb: DidModalCallback) {
   }, [modal.visible])
 }
 
-export const ModalProvider = <T extends UseModalProps>(props: {
+export const ModalProvider = <T extends ModalProps>(props: {
   value: T
   children: React.ReactChild
 }) => {

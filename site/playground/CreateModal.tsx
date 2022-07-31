@@ -5,8 +5,8 @@ interface Props {
   title: string
 }
 
-const LocalModal = createModal<Props>(() => {
-  const modal = useModal<Props>()
+const LocalModal = createModal<Props, { a: string }>(() => {
+  const modal = useModal<Props, { a: string }>()
   return (
     <Modal {...antdModal(modal)} onOk={modal.hide} title={modal.title}>
       基础弹窗
