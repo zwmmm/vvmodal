@@ -83,9 +83,8 @@ export function createModal<T = PlainObject, TResolve = any, TRef = any>(
       })
       showCallbackMap.set(vvModalId, showCallback)
       if (mountModal) {
-        mountModal(vvModalId).then(() => {
-          _modal.show(payload)
-        })
+        mountModal(vvModalId)
+        setTimeout(() => _modal.show(payload), 0)
       } else {
         _modal.show(payload)
       }

@@ -33,8 +33,8 @@ export interface GlobalModalType {
     visible: boolean
     args: PlainObject
   }>
-  register: (key: string, payload?: PlainObject) => Promise<void>
-  unregister: (key: string) => Promise<void>
+  register: (key: string, payload?: PlainObject) => void
+  unregister: (key: string) => void
 }
 
 export interface GlobalModalItem {

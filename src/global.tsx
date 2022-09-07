@@ -81,7 +81,6 @@ export function useGlobalModalData(): GlobalModalType {
         args: args || {}
       }
     }))
-    return Promise.resolve()
   }, [])
   const unregister = useCallback((key: string) => {
     setValue((val) => ({
@@ -91,7 +90,6 @@ export function useGlobalModalData(): GlobalModalType {
         args: {}
       }
     }))
-    return Promise.resolve()
   }, [])
   return {
     value,
