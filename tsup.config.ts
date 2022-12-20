@@ -13,6 +13,8 @@ export default defineConfig([
     entry: {
       'vvmodal.prod': './src/index.tsx'
     },
+    format: ['esm', 'cjs'],
+    legacyOutput: true,
     dts: {
       entry: './src/index.tsx'
     },
@@ -26,6 +28,8 @@ export default defineConfig([
     entry: {
       'vvmodal.dev': './src/index.tsx'
     },
+    format: ['esm', 'cjs'],
+    legacyOutput: true,
     define: {
       __DEV__: "'__DEV__'"
     }

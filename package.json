@@ -1,7 +1,8 @@
 {
   "name": "vvmodal",
   "version": "1.4.1",
-  "main": "index.js",
+  "main": "index.cjs.js",
+  "module": "index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
     "build": "pnpm tsup",
